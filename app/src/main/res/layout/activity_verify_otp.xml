@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    tools:context=".VerifyOTPActivity">
+
+    <ImageView
+        android:id="@+id/arcView"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/shape1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/comfortaa_bold"
+        android:text="Verify phone to proceed!"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/textColorPrimaryDark"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrow_back" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/comfortaa"
+        android:text="A verification code has been sent to"
+        android:textAllCaps="false"
+        android:textColor="@color/textColorPrimaryDark"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/mobile_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/comfortaa_bold"
+        android:text="+919915462971"
+        android:textAllCaps="false"
+        android:textColor="@color/textColorPrimaryDark"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <ImageView
+        android:id="@+id/arrow_back"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/arrow_back_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/verify_otp"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/verify_otp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/arcView"
+        app:layout_constraintTop_toBottomOf="@+id/arcView"/>
+
+    <com.mukesh.OtpView
+        android:id="@+id/otp_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        app:itemCount="6"
+        app:itemWidth="44dp"
+        app:itemHeight="44dp"
+        app:itemSpacing="4dp"
+        app:viewType="rectangle"
+        android:cursorVisible="false"
+        android:itemBackground="@color/otpView"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textColor="@color/textColorPrimaryDark"
+        android:fontFamily="@font/comfortaa_bold"
+        app:lineWidth="1dp"
+        app:lineColor="@color/otpView"
+        app:itemRadius="8dp"
+        android:imeOptions="actionDone"
+        app:layout_constraintEnd_toEndOf="@+id/verify_otp"
+        app:layout_constraintStart_toStartOf="@+id/verify_otp"
+        app:layout_constraintTop_toBottomOf="@+id/verify_otp"/>
+
+    <TextView
+        android:id="@+id/resend_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/comfortaa_bold"
+        android:text="Resend OTP"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:alpha="0.5"
+        android:enabled="false"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="@+id/otp_view"
+        app:layout_constraintStart_toStartOf="@+id/otp_view"
+        app:layout_constraintTop_toBottomOf="@+id/otp_view" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/verify_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="@color/grey"
+        app:cardCornerRadius="22dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/otp_view"
+        app:layout_constraintStart_toStartOf="@+id/otp_view"
+        app:layout_constraintTop_toBottomOf="@+id/resend_otp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/verify"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa_bold"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="VERIFY"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/textColorPrimaryLight"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/pattern5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

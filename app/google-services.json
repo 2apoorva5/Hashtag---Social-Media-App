@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "548214058475",
+    "firebase_url": "https://hashtag-24x7.firebaseio.com",
+    "project_id": "hashtag-24x7",
+    "storage_bucket": "hashtag-24x7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548214058475:android:27cd92b5b12a399e5bfdae",
+        "android_client_info": {
+          "package_name": "com.assistance.hashtagapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "548214058475-9olcv1bmjhqac8ms06hr9ot0une6n8eq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.assistance.hashtagapp",
+            "certificate_hash": "ac2c98b7df13c7db35df6c311d33b433130677d7"
+          }
+        },
+        {
+          "client_id": "548214058475-ls36ie41ne87n94r7i84tkn4jdq2v67p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZlo4f7EHuIHNJHCPeCdMRJ8QWcgU4Xig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "548214058475-ls36ie41ne87n94r7i84tkn4jdq2v67p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

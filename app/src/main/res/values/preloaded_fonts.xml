@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/comfortaa</item>
+        <item>@font/comfortaa_bold</item>
+        <item>@font/didact_gothic</item>
+        <item>@font/poppins</item>
+        <item>@font/poppins_bold</item>
+        <item>@font/poppins_medium</item>
+    </array>
+</resources>
