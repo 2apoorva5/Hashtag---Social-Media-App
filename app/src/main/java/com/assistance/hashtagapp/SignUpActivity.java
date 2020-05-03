@@ -78,25 +78,8 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        backArrow = findViewById(R.id.arrow_back);
-        nameField = findViewById(R.id.name);
-        emailField = findViewById(R.id.email);
-        mobileField = findViewById(R.id.mobile);
-        createPasswordField = findViewById(R.id.create_password);
-        confirmPasswordField = findViewById(R.id.confirm_password);
-        nameCard = findViewById(R.id.name_card);
-        emailCard = findViewById(R.id.email_card);
-        mobileCard = findViewById(R.id.mobile_card);
-        createPasswordCard = findViewById(R.id.create_password_card);
-        confirmPasswordCard = findViewById(R.id.confirm_password_card);
-        showPassword = findViewById(R.id.show_password);
-        termOfServices = findViewById(R.id.terms_of_service);
-        privacyPolicy = findViewById(R.id.privacy_policy);
-        signUp = findViewById(R.id.sign_up);
-        signUpCard = findViewById(R.id.sign_up_card);
-        signIn = findViewById(R.id.sign_in);
+        initViews();
+        initFirebase();
 
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +93,6 @@ public class SignUpActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setTheme(R.style.SpotsDialog)
                 .build();
-
 
         KeyboardVisibilityEvent.setEventListener(SignUpActivity.this, new KeyboardVisibilityEventListener(){
             @Override
@@ -157,6 +139,30 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    private void initViews() {
+        backArrow = findViewById(R.id.arrow_back);
+        nameField = findViewById(R.id.name_field);
+        emailField = findViewById(R.id.email_field);
+        mobileField = findViewById(R.id.mobile_field);
+        createPasswordField = findViewById(R.id.create_password_field);
+        confirmPasswordField = findViewById(R.id.confirm_password_field);
+        nameCard = findViewById(R.id.name_card);
+        emailCard = findViewById(R.id.email_card);
+        mobileCard = findViewById(R.id.mobile_card);
+        createPasswordCard = findViewById(R.id.create_password_card);
+        confirmPasswordCard = findViewById(R.id.confirm_password_card);
+        showPassword = findViewById(R.id.show_password);
+        termOfServices = findViewById(R.id.terms_of_service);
+        privacyPolicy = findViewById(R.id.privacy_policy);
+        signUp = findViewById(R.id.sign_up);
+        signUpCard = findViewById(R.id.sign_up_card);
+        signIn = findViewById(R.id.sign_in);
+    }
+
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+    }
+
     private TextWatcher signupTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -195,7 +201,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .enableVibration(true)
                                     .disableOutsideTouch()
                                     .enableProgress(true)
-                                    .setProgressColorInt(getResources().getColor(R.color.white))
+                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
                                     .show();
                             return;
                         }
@@ -216,7 +222,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .enableVibration(true)
                                     .disableOutsideTouch()
                                     .enableProgress(true)
-                                    .setProgressColorInt(getResources().getColor(R.color.white))
+                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
                                     .show();
                             return;
                         }
@@ -241,15 +247,22 @@ public class SignUpActivity extends AppCompatActivity {
                                     .enableVibration(true)
                                     .disableOutsideTouch()
                                     .enableProgress(true)
-                                    .setProgressColorInt(getResources().getColor(R.color.white))
+                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
                                     .show();
                             return;
                         }
                         else if(!PASSWORD_PATTERN.matcher(createPassword).matches())
                         {
-                            PasswordRequirementsBottomSheet passwordRequirementsBottomSheet = new PasswordRequirementsBottomSheet();
+                            final PasswordRequirementsBottomSheet passwordRequirementsBottomSheet = new PasswordRequirementsBottomSheet();
                             passwordRequirementsBottomSheet.show(getSupportFragmentManager(), "passwordRequirementsBottomSheet");
                             passwordRequirementsBottomSheet.setEnterTransition(R.anim.item_animation_slide_from_bottom);
+                            passwordRequirementsBottomSheet.setExitTransition(R.anim.item_animation_fall_down);
+                            passwordRequirementsBottomSheet.getView().findViewById(R.id.understood).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    passwordRequirementsBottomSheet.dismiss();
+                                }
+                            });
                             return;
                         }
                         else {
@@ -267,7 +280,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             Common.signUpMobile = mobile;
                                             Common.signUpPassword = createPassword;
                                             startActivity(new Intent(SignUpActivity.this, VerifyOTPActivity.class));
-                                            CustomIntent.customType(SignUpActivity.this, "left-to-right");
+                                            CustomIntent.customType(SignUpActivity.this, "fadein-to-fadeout");
                                         }
                                         else
                                         {
@@ -287,7 +300,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                     .enableVibration(true)
                                                     .disableOutsideTouch()
                                                     .enableProgress(true)
-                                                    .setProgressColorInt(getResources().getColor(R.color.white))
+                                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
                                                     .show();
                                             return;
                                         }
@@ -306,7 +319,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 .enableVibration(true)
                                                 .disableOutsideTouch()
                                                 .enableProgress(true)
-                                                .setProgressColorInt(getResources().getColor(R.color.white))
+                                                .setProgressColorInt(getResources().getColor(android.R.color.white))
                                                 .show();
                                         return;
                                     }

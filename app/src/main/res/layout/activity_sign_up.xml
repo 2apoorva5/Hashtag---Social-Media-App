@@ -18,6 +18,7 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerCrop"
+        android:tint="@android:color/black"
         android:src="@drawable/arrow_back_dark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +70,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="22dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
@@ -82,12 +83,12 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/name_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/account_icon"
                 android:drawablePadding="16dp"
-                android:drawableTint="@color/black"
+                android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Name*"
@@ -120,7 +121,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="22dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
@@ -133,12 +134,12 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/email_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/email_icon"
                 android:drawablePadding="16dp"
-                android:drawableTint="@color/black"
+                android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Email*"
@@ -171,7 +172,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="22dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
@@ -184,12 +185,12 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/mobile"
+                android:id="@+id/mobile_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/phone_icon"
                 android:drawablePadding="16dp"
-                android:drawableTint="@color/black"
+                android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Mobile*"
@@ -223,7 +224,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="22dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
@@ -236,12 +237,12 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/create_password"
+                android:id="@+id/create_password_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/password_icon"
                 android:drawablePadding="16dp"
-                android:drawableTint="@color/black"
+                android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Create Password*"
@@ -274,7 +275,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="22dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
@@ -287,12 +288,12 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/confirm_password"
+                android:id="@+id/confirm_password_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/password_icon"
                 android:drawablePadding="16dp"
-                android:drawableTint="@color/black"
+                android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Confirm Password*"
@@ -419,7 +420,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         app:cardBackgroundColor="@color/grey"
         app:cardCornerRadius="22dp"
@@ -462,6 +463,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:fontFamily="@font/comfortaa"
         android:text="Already have an account?"
         android:textAlignment="center"

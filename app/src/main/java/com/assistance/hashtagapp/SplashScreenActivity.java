@@ -19,7 +19,6 @@ import maes.tech.intentanim.CustomIntent;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private int SLEEP_TIMER = 4000;
     private AVLoadingIndicatorView progress;
 
     FirebaseAuth firebaseAuth;
@@ -43,8 +42,15 @@ public class SplashScreenActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
-        progress = findViewById(R.id.progress);
+        initView();
+        initFirebase();
+    }
 
+    private void initView() {
+        progress = findViewById(R.id.progress);
+    }
+
+    private void initFirebase() {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
     }
@@ -53,6 +59,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         progress.show();
+        int SLEEP_TIMER = 4000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

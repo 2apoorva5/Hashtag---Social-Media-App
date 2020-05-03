@@ -30,8 +30,7 @@ public class ToSignUpActivity extends AppCompatActivity {
             }
         }
 
-        signUp = findViewById(R.id.sign_up);
-        signIn = findViewById(R.id.sign_in);
+        initViews();
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +47,11 @@ public class ToSignUpActivity extends AppCompatActivity {
                 CustomIntent.customType(ToSignUpActivity.this, "left-to-right");
             }
         });
+    }
+
+    private void initViews() {
+        signUp = findViewById(R.id.sign_up);
+        signIn = findViewById(R.id.sign_in);
     }
 
     @Override

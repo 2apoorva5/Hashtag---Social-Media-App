@@ -31,6 +31,7 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:src="@drawable/close_icon"
+        android:tint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,6 +61,7 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:src="@drawable/confirm_icon"
+        android:tint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -367,7 +369,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 app:mcv_cornerRadius="16dp"
-                app:mcv_backgroundColor="@color/white"
+                app:mcv_backgroundColor="@android:color/white"
                 app:mcv_textColor="@color/textColorSecondaryDark"
                 app:mcv_selectedBackgroundColor="@color/colorAccent"
                 app:mcv_selectedTextColor="@color/textColorPrimaryDark"
@@ -392,7 +394,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 app:mcv_cornerRadius="16dp"
-                app:mcv_backgroundColor="@color/white"
+                app:mcv_backgroundColor="@android:color/white"
                 app:mcv_textColor="@color/textColorSecondaryDark"
                 app:mcv_selectedBackgroundColor="@color/colorAccent"
                 app:mcv_selectedTextColor="@color/textColorPrimaryDark"
@@ -417,7 +419,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 app:mcv_cornerRadius="16dp"
-                app:mcv_backgroundColor="@color/white"
+                app:mcv_backgroundColor="@android:color/white"
                 app:mcv_textColor="@color/textColorSecondaryDark"
                 app:mcv_selectedBackgroundColor="@color/colorAccent"
                 app:mcv_selectedTextColor="@color/textColorPrimaryDark"

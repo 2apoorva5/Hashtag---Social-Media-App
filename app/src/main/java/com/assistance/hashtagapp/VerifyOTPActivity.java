@@ -79,15 +79,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
             }
         }
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        backArrow = findViewById(R.id.arrow_back);
-        mobileNumber = findViewById(R.id.mobile_number);
-        resend = findViewById(R.id.resend_otp);
-        verifyOTP = findViewById(R.id.verify_otp);
-        otpView = findViewById(R.id.otp_view);
-        verify = findViewById(R.id.verify);
-        verifyCard = findViewById(R.id.verify_card);
+        initViews();
+        initFirebase();
 
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +181,20 @@ public class VerifyOTPActivity extends AppCompatActivity {
         });
     }
 
+    private void initViews() {
+        backArrow = findViewById(R.id.arrow_back);
+        mobileNumber = findViewById(R.id.mobile_number);
+        resend = findViewById(R.id.resend_otp);
+        verifyOTP = findViewById(R.id.verify_otp);
+        otpView = findViewById(R.id.otp_view);
+        verify = findViewById(R.id.verify);
+        verifyCard = findViewById(R.id.verify_card);
+    }
+
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+    }
+
     private void sendOTP()
     {
         mCallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -212,7 +219,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                             .enableVibration(true)
                             .disableOutsideTouch()
                             .enableProgress(true)
-                            .setProgressColorInt(getResources().getColor(R.color.white))
+                            .setProgressColorInt(getResources().getColor(android.R.color.white))
                             .show();
                     return;
                 } else if (e instanceof FirebaseTooManyRequestsException) {
@@ -228,7 +235,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                             .enableVibration(true)
                             .disableOutsideTouch()
                             .enableProgress(true)
-                            .setProgressColorInt(getResources().getColor(R.color.white))
+                            .setProgressColorInt(getResources().getColor(android.R.color.white))
                             .show();
                     return;
                 }
@@ -269,6 +276,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                         {
                             FirebaseUser user = task.getResult().getUser();
                             AuthCredential authCredential = EmailAuthProvider.getCredential(Common.signUpEmail, Common.signUpPassword);
+                            assert user != null;
                             user.linkWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -278,13 +286,13 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
                                         Map<String, Object> map = new HashMap<>();
                                         map.put("Name", Common.signUpName);
-                                        map.put("Username", null);
-                                        map.put("Bio", null);
-                                        map.put("Gender", null);
-                                        map.put("Date of Birth", null);
+                                        map.put("Username", "");
+                                        map.put("Bio", "");
+                                        map.put("Gender", "");
+                                        map.put("Date of Birth", "");
                                         map.put("Email", Common.signUpEmail);
                                         map.put("Mobile", Common.signUpMobile);
-                                        map.put("Profile Pic", null);
+                                        map.put("Profile Pic", "");
 
                                         firestore.collection("Users").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                             @Override
@@ -309,7 +317,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                             .enableVibration(true)
                                                             .disableOutsideTouch()
                                                             .enableProgress(true)
-                                                            .setProgressColorInt(getResources().getColor(R.color.white))
+                                                            .setProgressColorInt(getResources().getColor(android.R.color.white))
                                                             .show();
                                                     return;
                                                 }
@@ -330,7 +338,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                 .enableVibration(true)
                                                 .disableOutsideTouch()
                                                 .enableProgress(true)
-                                                .setProgressColorInt(getResources().getColor(R.color.white))
+                                                .setProgressColorInt(getResources().getColor(android.R.color.white))
                                                 .show();
                                         return;
                                     }
@@ -353,7 +361,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                         .enableVibration(true)
                                         .disableOutsideTouch()
                                         .enableProgress(true)
-                                        .setProgressColorInt(getResources().getColor(R.color.white))
+                                        .setProgressColorInt(getResources().getColor(android.R.color.white))
                                         .show();
                                 return;
                             }
@@ -385,6 +393,6 @@ public class VerifyOTPActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        CustomIntent.customType(VerifyOTPActivity.this, "right-to-left");
+        CustomIntent.customType(VerifyOTPActivity.this, "fadein-to-fadeout");
     }
 }

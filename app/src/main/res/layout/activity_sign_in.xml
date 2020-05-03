@@ -18,6 +18,7 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerCrop"
+        android:tint="@android:color/black"
         android:src="@drawable/arrow_back_dark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +70,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="22dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
@@ -82,12 +83,12 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/email_or_mobile"
+                android:id="@+id/email_or_mobile_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/email_icon"
                 android:drawablePadding="16dp"
-                android:drawableTint="@color/black"
+                android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Email or Mobile"
@@ -120,7 +121,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="22dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
@@ -133,12 +134,12 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/password_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/password_icon"
                 android:drawablePadding="16dp"
-                android:drawableTint="@color/black"
+                android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/comfortaa"
                 android:hint="Password"
@@ -349,6 +350,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="2dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"

@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -29,6 +31,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import dmax.dialog.SpotsDialog;
 import maes.tech.intentanim.CustomIntent;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -40,7 +43,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
 
-    ProgressDialog progressDialog;
+    AlertDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +58,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         }
 
-        backArrow = findViewById(R.id.arrow_back);
-        forgotPassword = findViewById(R.id.forgot_password);
-        emailField = findViewById(R.id.email);
-        reset = findViewById(R.id.reset);
-        resetCard = findViewById(R.id.reset_card);
-        emailCard = findViewById(R.id.email_card);
-
-        firebaseAuth = FirebaseAuth.getInstance();
+        initViews();
+        initFirebase();
 
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +67,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        progressDialog = new ProgressDialog(ForgotPasswordActivity.this);
-        progressDialog.setMessage("Hold on...sending password reset link!");
+
+        progressDialog = new SpotsDialog.Builder().setContext(ForgotPasswordActivity.this)
+                .setMessage("Sending password reset link..")
+                .setCancelable(false)
+                .setTheme(R.style.SpotsDialog)
+                .build();
 
         KeyboardVisibilityEvent.setEventListener(ForgotPasswordActivity.this, new KeyboardVisibilityEventListener() {
             @Override
@@ -84,6 +85,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
 
         emailField.addTextChangedListener(resetPasswordTextWatcher);
+    }
+
+    private void initViews() {
+        backArrow = findViewById(R.id.arrow_back);
+        forgotPassword = findViewById(R.id.forgot_password);
+        emailField = findViewById(R.id.email_field);
+        reset = findViewById(R.id.reset);
+        resetCard = findViewById(R.id.reset_card);
+        emailCard = findViewById(R.id.email_card);
+    }
+
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     private TextWatcher resetPasswordTextWatcher = new TextWatcher() {
@@ -120,7 +134,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     .enableVibration(true)
                                     .disableOutsideTouch()
                                     .enableProgress(true)
-                                    .setProgressColorInt(getResources().getColor(R.color.white))
+                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
                                     .show();
                             return;
                         }
@@ -134,7 +148,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                             if(task.isSuccessful())
                                             {
                                                 progressDialog.dismiss();
-                                                Toast.makeText(ForgotPasswordActivity.this, "A password reset link has been sent to your Email!", Toast.LENGTH_LONG).show();
+                                                Toast toast = Toast.makeText(ForgotPasswordActivity.this, "A password reset link has been sent to your Email!", Toast.LENGTH_LONG);
+                                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                                toast.show();
                                                 onBackPressed();
                                             }
                                             else
@@ -151,7 +167,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                         .enableVibration(true)
                                                         .disableOutsideTouch()
                                                         .enableProgress(true)
-                                                        .setProgressColorInt(getResources().getColor(R.color.white))
+                                                        .setProgressColorInt(getResources().getColor(android.R.color.white))
                                                         .show();
                                                 return;
                                             }
@@ -202,6 +218,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        CustomIntent.customType(ForgotPasswordActivity.this, "right-to-left");
+        CustomIntent.customType(ForgotPasswordActivity.this, "fadein-to-fadeout");
     }
 }

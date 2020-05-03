@@ -68,20 +68,8 @@ public class SignInActivity extends AppCompatActivity {
             }
         }
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        backArrow = findViewById(R.id.arrow_back);
-        emailOrMobileField = findViewById(R.id.email_or_mobile);
-        passwordField = findViewById(R.id.password);
-        showPassword = findViewById(R.id.show_password);
-        forgotPassword = findViewById(R.id.forgot_password);
-        termOfServices = findViewById(R.id.terms_of_service);
-        privacyPolicy = findViewById(R.id.privacy_policy);
-        signIn = findViewById(R.id.sign_in);
-        signUp = findViewById(R.id.sign_up);
-        emailOrMobileCard = findViewById(R.id.email_or_mobile_card);
-        passwordCard = findViewById(R.id.password_card);
-        signInCard = findViewById(R.id.sign_in_card);
+        initViews();
+        initFirebase();
 
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,12 +121,31 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SignInActivity.this, ForgotPasswordActivity.class));
-                CustomIntent.customType(SignInActivity.this, "left-to-right");
+                CustomIntent.customType(SignInActivity.this, "fadein-to-fadeout");
             }
         });
 
         emailOrMobileField.addTextChangedListener(signinTextWatcher);
         passwordField.addTextChangedListener(signinTextWatcher);
+    }
+
+    private void initViews() {
+        backArrow = findViewById(R.id.arrow_back);
+        emailOrMobileField = findViewById(R.id.email_or_mobile_field);
+        passwordField = findViewById(R.id.password_field);
+        showPassword = findViewById(R.id.show_password);
+        forgotPassword = findViewById(R.id.forgot_password);
+        termOfServices = findViewById(R.id.terms_of_service);
+        privacyPolicy = findViewById(R.id.privacy_policy);
+        signIn = findViewById(R.id.sign_in);
+        signUp = findViewById(R.id.sign_up);
+        emailOrMobileCard = findViewById(R.id.email_or_mobile_card);
+        passwordCard = findViewById(R.id.password_card);
+        signInCard = findViewById(R.id.sign_in_card);
+    }
+
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     private TextWatcher signinTextWatcher = new TextWatcher() {
@@ -193,7 +200,7 @@ public class SignInActivity extends AppCompatActivity {
                                                     .enableVibration(true)
                                                     .disableOutsideTouch()
                                                     .enableProgress(true)
-                                                    .setProgressColorInt(getResources().getColor(R.color.white))
+                                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
                                                     .show();
                                             return;
                                         }
@@ -217,7 +224,7 @@ public class SignInActivity extends AppCompatActivity {
                                                 .enableVibration(true)
                                                 .disableOutsideTouch()
                                                 .enableProgress(true)
-                                                .setProgressColorInt(getResources().getColor(R.color.white))
+                                                .setProgressColorInt(getResources().getColor(android.R.color.white))
                                                 .show();
                                         return;
                                     }
@@ -241,7 +248,7 @@ public class SignInActivity extends AppCompatActivity {
                                     .enableVibration(true)
                                     .disableOutsideTouch()
                                     .enableProgress(true)
-                                    .setProgressColorInt(getResources().getColor(R.color.white))
+                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
                                     .show();
                             return;
                         }
@@ -306,7 +313,7 @@ public class SignInActivity extends AppCompatActivity {
                             .enableVibration(true)
                             .disableOutsideTouch()
                             .enableProgress(true)
-                            .setProgressColorInt(getResources().getColor(R.color.white))
+                            .setProgressColorInt(getResources().getColor(android.R.color.white))
                             .show();
                     return;
                 }
