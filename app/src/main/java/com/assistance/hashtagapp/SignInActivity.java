@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Pair;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -48,7 +50,7 @@ public class SignInActivity extends AppCompatActivity {
     ImageView backArrow;
     EditText emailOrMobileField, passwordField;
     MaterialCheckBox showPassword;
-    TextView forgotPassword, termOfServices, privacyPolicy, signUp;
+    TextView heading1, heading2, content1, content2, content3, forgotPassword, termOfServices, privacyPolicy, signUp;
     ConstraintLayout signIn;
     CardView emailOrMobileCard, passwordCard, signInCard;
     FirebaseAuth firebaseAuth;
@@ -98,8 +100,25 @@ public class SignInActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
-                CustomIntent.customType(SignInActivity.this, "left-to-right");
+                Intent signUpIntent = new Intent(SignInActivity.this, SignUpActivity.class);
+
+                Pair[] pairs = new Pair[12];
+                pairs[0] = new Pair<View, String>(heading1, "heading1_transition");
+                pairs[1] = new Pair<View, String>(heading2, "heading2_transition");
+                pairs[2] = new Pair<View, String>(content1, "content1_transition");
+                pairs[3] = new Pair<View, String>(content2, "content2_transition");
+                pairs[4] = new Pair<View, String>(content3, "content3_transition");
+                pairs[5] = new Pair<View, String>(emailOrMobileCard, "email_card_transition");
+                pairs[6] = new Pair<View, String>(passwordCard, "password_card_transition");
+                pairs[7] = new Pair<View, String>(termOfServices, "tos_transition");
+                pairs[8] = new Pair<View, String>(privacyPolicy, "pp_transition");
+                pairs[9] = new Pair<View, String>(showPassword, "show_password_transition");
+                pairs[10] = new Pair<View, String>(signInCard, "signin_signup_card_transition");
+                pairs[11] = new Pair<View, String>(signUp, "signin_signup_transition");
+
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SignInActivity.this, pairs);
+
+                startActivity(signUpIntent, activityOptions.toBundle());
             }
         });
 
@@ -131,6 +150,11 @@ public class SignInActivity extends AppCompatActivity {
 
     private void initViews() {
         backArrow = findViewById(R.id.arrow_back);
+        heading1 = findViewById(R.id.heading1);
+        heading2 = findViewById(R.id.heading2);
+        content1 = findViewById(R.id.content1);
+        content2 = findViewById(R.id.content2);
+        content3 = findViewById(R.id.content3);
         emailOrMobileField = findViewById(R.id.email_or_mobile_field);
         passwordField = findViewById(R.id.password_field);
         showPassword = findViewById(R.id.show_password);
@@ -161,7 +185,6 @@ public class SignInActivity extends AppCompatActivity {
 
             if(!emailOrMobile.isEmpty() && !password.isEmpty())
             {
-                signInCard.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 signIn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -257,7 +280,6 @@ public class SignInActivity extends AppCompatActivity {
             }
             else
             {
-                signInCard.setCardBackgroundColor(getResources().getColor(R.color.grey));
                 signIn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -324,11 +346,5 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        CustomIntent.customType(SignInActivity.this, "right-to-left");
     }
 }

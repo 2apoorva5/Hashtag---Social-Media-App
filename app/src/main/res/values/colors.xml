@@ -5,15 +5,13 @@
     <color name="colorAccent">#05DFD7</color>
     <color name="colorAccentDark">#0DABB3</color>
 
-    <color name="grey">#738598</color>
-    <color name="green">#00BDAA</color>
-
     <color name="otpView">#b2ebf2</color>
 
     <color name="background">#E3F6F5</color>
     <color name="errorColor">#B71C1C</color>
     <color name="infoColor">#0F4C81</color>
     <color name="successColor">#00BDAA</color>
+    <color name="inactiveColor">#738598</color>
 
     <color name="textColorPrimaryDark">#000000</color>
     <color name="textColorSecondaryDark">#738598</color>

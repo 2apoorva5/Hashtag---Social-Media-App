@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -15,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Pair;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -48,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
     ImageView backArrow;
     EditText nameField, emailField, mobileField, createPasswordField, confirmPasswordField;
     MaterialCheckBox showPassword;
-    TextView termOfServices, privacyPolicy, signIn;
+    TextView heading1, heading2, content1, content2, content3, termOfServices, privacyPolicy, signIn;
     ConstraintLayout signUp;
     CardView nameCard, emailCard, mobileCard, createPasswordCard, confirmPasswordCard, signUpCard;
     FirebaseAuth firebaseAuth;
@@ -111,8 +113,25 @@ public class SignUpActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
-                CustomIntent.customType(SignUpActivity.this, "left-to-right");
+                Intent signUpIntent = new Intent(SignUpActivity.this, SignInActivity.class);
+
+                Pair[] pairs = new Pair[12];
+                pairs[0] = new Pair<View, String>(heading1, "heading1_transition");
+                pairs[1] = new Pair<View, String>(heading2, "heading2_transition");
+                pairs[2] = new Pair<View, String>(content1, "content1_transition");
+                pairs[3] = new Pair<View, String>(content2, "content2_transition");
+                pairs[4] = new Pair<View, String>(content3, "content3_transition");
+                pairs[5] = new Pair<View, String>(emailCard, "email_card_transition");
+                pairs[6] = new Pair<View, String>(confirmPasswordCard, "password_card_transition");
+                pairs[7] = new Pair<View, String>(termOfServices, "tos_transition");
+                pairs[8] = new Pair<View, String>(privacyPolicy, "pp_transition");
+                pairs[9] = new Pair<View, String>(showPassword, "show_password_transition");
+                pairs[10] = new Pair<View, String>(signUpCard, "signin_signup_card_transition");
+                pairs[11] = new Pair<View, String>(signIn, "signin_signup_transition");
+
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SignUpActivity.this, pairs);
+
+                startActivity(signUpIntent, activityOptions.toBundle());
             }
         });
 
@@ -141,6 +160,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void initViews() {
         backArrow = findViewById(R.id.arrow_back);
+        heading1 = findViewById(R.id.heading1);
+        heading2 = findViewById(R.id.heading2);
+        content1 = findViewById(R.id.content1);
+        content2 = findViewById(R.id.content2);
+        content3 = findViewById(R.id.content3);
         nameField = findViewById(R.id.name_field);
         emailField = findViewById(R.id.email_field);
         mobileField = findViewById(R.id.mobile_field);
@@ -179,7 +203,6 @@ public class SignUpActivity extends AppCompatActivity {
 
             if(!name.isEmpty() && !email.isEmpty() && !mobile.isEmpty() && !createPassword.isEmpty() && !confirmPassword.isEmpty())
             {
-                signUpCard.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 signUp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -257,12 +280,6 @@ public class SignUpActivity extends AppCompatActivity {
                             passwordRequirementsBottomSheet.show(getSupportFragmentManager(), "passwordRequirementsBottomSheet");
                             passwordRequirementsBottomSheet.setEnterTransition(R.anim.item_animation_slide_from_bottom);
                             passwordRequirementsBottomSheet.setExitTransition(R.anim.item_animation_fall_down);
-                            passwordRequirementsBottomSheet.getView().findViewById(R.id.understood).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    passwordRequirementsBottomSheet.dismiss();
-                                }
-                            });
                             return;
                         }
                         else {
@@ -331,7 +348,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
             else
             {
-                signUpCard.setCardBackgroundColor(getResources().getColor(R.color.grey));
                 signUp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -385,11 +401,5 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        CustomIntent.customType(SignUpActivity.this, "right-to-left");
     }
 }

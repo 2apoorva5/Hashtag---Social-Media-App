@@ -147,9 +147,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
         otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
             @Override
             public void onOtpCompleted(final String otp) {
-                if(!otp.isEmpty() && otp.length() == 6)
+                if(otp.length() == 6)
                 {
-                    verifyCard.setCardBackgroundColor(getResources().getColor(R.color.green));
                     verify.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -162,12 +161,11 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    verifyCard.setCardBackgroundColor(getResources().getColor(R.color.grey));
                     verify.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             UIUtil.hideKeyboard(VerifyOTPActivity.this);
-                            if(otp.isEmpty())
+                            if(otp.isEmpty() || otp.length() < 6)
                             {
                                 YoYo.with(Techniques.RubberBand)
                                         .duration(700)
@@ -300,8 +298,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                 if(task.isSuccessful())
                                                 {
                                                     progressDialog.dismiss();
-                                                    startActivity(new Intent(VerifyOTPActivity.this, NextActivity.class));
+                                                    startActivity(new Intent(VerifyOTPActivity.this, EditProfileActivity.class));
                                                     CustomIntent.customType(VerifyOTPActivity.this, "left-to-right");
+                                                    finish();
                                                 }
                                                 else
                                                 {

@@ -112,7 +112,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             if(!email.isEmpty())
             {
-                resetCard.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 reset.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -179,7 +178,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
             else
             {
-                resetCard.setCardBackgroundColor(getResources().getColor(R.color.grey));
                 reset.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

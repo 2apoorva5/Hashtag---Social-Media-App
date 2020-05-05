@@ -10,6 +10,10 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,10 +23,13 @@ import maes.tech.intentanim.CustomIntent;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private AVLoadingIndicatorView progress;
+    ImageView appLogo;
+    TextView appSlogan;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+
+    Animation topAnimation, bottomAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +50,18 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
 
         initView();
+        initAnimation();
         initFirebase();
     }
 
     private void initView() {
-        progress = findViewById(R.id.progress);
+        appLogo = findViewById(R.id.app_logo);
+        appSlogan = findViewById(R.id.app_slogan);
+    }
+
+    private void initAnimation() {
+        topAnimation = AnimationUtils.loadAnimation(SplashScreenActivity.this, R.anim.splash_top_animation);
+        bottomAnimation = AnimationUtils.loadAnimation(SplashScreenActivity.this, R.anim.splash_bottom_animation);
     }
 
     private void initFirebase() {
@@ -58,8 +72,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        progress.show();
-        int SLEEP_TIMER = 4000;
+        int SPLASH_TIMER = 4000;
+
+        appLogo.setAnimation(topAnimation);
+        appSlogan.setAnimation(bottomAnimation);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -68,18 +85,18 @@ public class SplashScreenActivity extends AppCompatActivity {
                     Intent intent = new Intent(SplashScreenActivity.this, NextActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    CustomIntent.customType(SplashScreenActivity.this, "left-to-right");
+                    CustomIntent.customType(SplashScreenActivity.this, "fadein-to-fadeout");
                     finish();
                 }
                 else {
                     Intent intent = new Intent(SplashScreenActivity.this, ToSignUpActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    CustomIntent.customType(SplashScreenActivity.this, "left-to-right");
+                    CustomIntent.customType(SplashScreenActivity.this, "fadein-to-fadeout");
                     finish();
                 }
             }
-        }, SLEEP_TIMER);
+        }, SPLASH_TIMER);
     }
 
     public static void setWindowFlag(SplashScreenActivity splashScreenActivity, final int bits, boolean on) {
