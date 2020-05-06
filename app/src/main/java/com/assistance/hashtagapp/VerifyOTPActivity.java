@@ -34,6 +34,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mukesh.OnOtpCompletionListener;
 import com.mukesh.OtpView;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import com.tapadoo.alerter.Alerter;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -298,9 +300,28 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                 if(task.isSuccessful())
                                                 {
                                                     progressDialog.dismiss();
-                                                    startActivity(new Intent(VerifyOTPActivity.this, EditProfileActivity.class));
-                                                    CustomIntent.customType(VerifyOTPActivity.this, "left-to-right");
-                                                    finish();
+                                                    MaterialDialog materialDialog = new MaterialDialog.Builder(VerifyOTPActivity.this)
+                                                            .setMessage("Cool! You've been registered with us. Now, set up a username in the next process to get going.")
+                                                            .setAnimation(R.raw.registered)
+                                                            .setCancelable(false)
+                                                            .setPositiveButton("Proceed", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int which) {
+                                                                    dialogInterface.dismiss();
+                                                                    startActivity(new Intent(VerifyOTPActivity.this, EditProfileActivity.class));
+                                                                    CustomIntent.customType(VerifyOTPActivity.this, "left-to-right");
+                                                                    finish();
+                                                                }
+                                                            })
+                                                            .setNegativeButton("Cancel", R.drawable.material_dialog_cancel, new MaterialDialog.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int which) {
+                                                                    dialogInterface.dismiss();
+                                                                    finishAffinity();
+                                                                }
+                                                            })
+                                                            .build();
+                                                    materialDialog.show();
                                                 }
                                                 else
                                                 {

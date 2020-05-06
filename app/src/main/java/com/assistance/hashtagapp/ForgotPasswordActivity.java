@@ -25,6 +25,9 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import com.tapadoo.alerter.Alerter;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -140,38 +143,104 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         else
                         {
                             progressDialog.show();
-                            firebaseAuth.sendPasswordResetEmail(email)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful())
-                                            {
-                                                progressDialog.dismiss();
-                                                Toast toast = Toast.makeText(ForgotPasswordActivity.this, "A password reset link has been sent to your Email!", Toast.LENGTH_LONG);
-                                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                                toast.show();
-                                                onBackPressed();
-                                            }
-                                            else
-                                            {
-                                                progressDialog.dismiss();
-                                                Alerter.create(ForgotPasswordActivity.this)
-                                                        .setText("Whoa! We didn't find any account using that Email!")
-                                                        .setTextAppearance(R.style.ErrorAlert)
-                                                        .setBackgroundColorRes(R.color.errorColor)
-                                                        .setIcon(R.drawable.error)
-                                                        .setDuration(3000)
-                                                        .enableSwipeToDismiss()
-                                                        .enableIconPulse(true)
-                                                        .enableVibration(true)
-                                                        .disableOutsideTouch()
-                                                        .enableProgress(true)
-                                                        .setProgressColorInt(getResources().getColor(android.R.color.white))
-                                                        .show();
-                                                return;
-                                            }
+                            firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        if(!task.getResult().getSignInMethods().isEmpty())
+                                        {
+                                            firebaseAuth.sendPasswordResetEmail(email)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if(task.isSuccessful())
+                                                            {
+                                                                progressDialog.dismiss();
+                                                                MaterialDialog materialDialog = new MaterialDialog.Builder(ForgotPasswordActivity.this)
+                                                                        .setMessage("A password reset link has been sent to " + email)
+                                                                        .setAnimation(R.raw.send_sms)
+                                                                        .setCancelable(false)
+                                                                        .setPositiveButton("Okay", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(DialogInterface dialogInterface, int which) {
+                                                                                dialogInterface.dismiss();
+                                                                                onBackPressed();
+                                                                            }
+                                                                        })
+                                                                        .setNegativeButton("Cancel", R.drawable.material_dialog_cancel, new MaterialDialog.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(DialogInterface dialogInterface, int which) {
+                                                                                dialogInterface.dismiss();
+                                                                            }
+                                                                        })
+                                                                        .build();
+                                                                materialDialog.show();
+                                                            }
+                                                            else
+                                                            {
+                                                                progressDialog.dismiss();
+                                                                Alerter.create(ForgotPasswordActivity.this)
+                                                                        .setText("Whoa! There was some error in that process!")
+                                                                        .setTextAppearance(R.style.ErrorAlert)
+                                                                        .setBackgroundColorRes(R.color.errorColor)
+                                                                        .setIcon(R.drawable.error)
+                                                                        .setDuration(3000)
+                                                                        .enableSwipeToDismiss()
+                                                                        .enableIconPulse(true)
+                                                                        .enableVibration(true)
+                                                                        .disableOutsideTouch()
+                                                                        .enableProgress(true)
+                                                                        .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                                                        .show();
+                                                                return;
+                                                            }
+                                                        }
+                                                    });
                                         }
-                                    });
+                                        else
+                                        {
+                                            progressDialog.dismiss();
+                                            YoYo.with(Techniques.Shake)
+                                                    .duration(700)
+                                                    .repeat(1)
+                                                    .playOn(emailCard);
+                                            Alerter.create(ForgotPasswordActivity.this)
+                                                    .setText("Whoa! We didn't find any account using that email!")
+                                                    .setTextAppearance(R.style.InfoAlert)
+                                                    .setBackgroundColorRes(R.color.infoColor)
+                                                    .setIcon(R.drawable.info)
+                                                    .setDuration(3000)
+                                                    .enableSwipeToDismiss()
+                                                    .enableIconPulse(true)
+                                                    .enableVibration(true)
+                                                    .disableOutsideTouch()
+                                                    .enableProgress(true)
+                                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                                    .show();
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        progressDialog.dismiss();
+                                        Alerter.create(ForgotPasswordActivity.this)
+                                                .setText("Whoops! There was some error in that process!")
+                                                .setTextAppearance(R.style.ErrorAlert)
+                                                .setBackgroundColorRes(R.color.errorColor)
+                                                .setIcon(R.drawable.error)
+                                                .setDuration(3000)
+                                                .enableSwipeToDismiss()
+                                                .enableIconPulse(true)
+                                                .enableVibration(true)
+                                                .disableOutsideTouch()
+                                                .enableProgress(true)
+                                                .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                                .show();
+                                        return;
+                                    }
+                                }
+                            });
                         }
                     }
                 });

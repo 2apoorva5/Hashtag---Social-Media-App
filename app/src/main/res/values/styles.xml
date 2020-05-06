@@ -13,6 +13,14 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
 
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+
+        //Material Dialog
+        <item name="material_dialog_background">@android:color/white</item>
+        <item name="material_dialog_title_text_color">@color/textColorPrimaryDark</item>
+        <item name="material_dialog_message_text_color">@color/textColorPrimaryDark</item>
+        <item name="material_dialog_positive_button_color">@color/colorPrimary</item>
+        <item name="material_dialog_positive_button_text_color">@android:color/white</item>
+        <item name="material_dialog_negative_button_text_color">@color/colorPrimary</item>
     </style>
 
     <style name="ErrorAlert" parent="TextAppearance.AppCompat">
@@ -56,6 +64,7 @@
         <item name="DialogTitleAppearance">@style/ProgressText</item>
         <item name="DialogSpotColor">@color/colorPrimary</item>
         <item name="DialogSpotCount">4</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 
 </resources>

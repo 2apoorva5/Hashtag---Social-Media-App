@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +33,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import com.tapadoo.alerter.Alerter;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -283,65 +284,83 @@ public class SignUpActivity extends AppCompatActivity {
                             return;
                         }
                         else {
-                            progressDialog.show();
-                            firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                                    if(task.isSuccessful())
-                                    {
-                                        if(task.getResult().getSignInMethods().isEmpty())
-                                        {
-                                            progressDialog.dismiss();
-                                            Common.signUpName = name;
-                                            Common.signUpEmail = email;
-                                            Common.signUpMobile = mobile;
-                                            Common.signUpPassword = createPassword;
-                                            startActivity(new Intent(SignUpActivity.this, VerifyOTPActivity.class));
-                                            CustomIntent.customType(SignUpActivity.this, "fadein-to-fadeout");
+                            MaterialDialog materialDialog = new MaterialDialog.Builder(SignUpActivity.this)
+                                    .setMessage("A verification code will be sent to the mobile number provided. Standard rates may apply in the process.")
+                                    .setCancelable(false)
+                                    .setAnimation(R.raw.send_sms)
+                                    .setPositiveButton("Okay", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int which) {
+                                            dialogInterface.dismiss();
+                                            progressDialog.show();
+                                            firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                                                    if(task.isSuccessful())
+                                                    {
+                                                        if(task.getResult().getSignInMethods().isEmpty())
+                                                        {
+                                                            progressDialog.dismiss();
+                                                            Common.signUpName = name;
+                                                            Common.signUpEmail = email;
+                                                            Common.signUpMobile = mobile;
+                                                            Common.signUpPassword = createPassword;
+                                                            startActivity(new Intent(SignUpActivity.this, VerifyOTPActivity.class));
+                                                            CustomIntent.customType(SignUpActivity.this, "fadein-to-fadeout");
+                                                        }
+                                                        else
+                                                        {
+                                                            progressDialog.dismiss();
+                                                            YoYo.with(Techniques.Shake)
+                                                                    .duration(700)
+                                                                    .repeat(1)
+                                                                    .playOn(emailCard);
+                                                            Alerter.create(SignUpActivity.this)
+                                                                    .setText("There's already an account with that Email. Try another!")
+                                                                    .setTextAppearance(R.style.InfoAlert)
+                                                                    .setBackgroundColorRes(R.color.infoColor)
+                                                                    .setIcon(R.drawable.info)
+                                                                    .setDuration(3000)
+                                                                    .enableSwipeToDismiss()
+                                                                    .enableIconPulse(true)
+                                                                    .enableVibration(true)
+                                                                    .disableOutsideTouch()
+                                                                    .enableProgress(true)
+                                                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                                                    .show();
+                                                            return;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        progressDialog.dismiss();
+                                                        Alerter.create(SignUpActivity.this)
+                                                                .setText("Whoops! There was some error in that process!")
+                                                                .setTextAppearance(R.style.ErrorAlert)
+                                                                .setBackgroundColorRes(R.color.errorColor)
+                                                                .setIcon(R.drawable.error)
+                                                                .setDuration(3000)
+                                                                .enableSwipeToDismiss()
+                                                                .enableIconPulse(true)
+                                                                .enableVibration(true)
+                                                                .disableOutsideTouch()
+                                                                .enableProgress(true)
+                                                                .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                                                .show();
+                                                        return;
+                                                    }
+                                                }
+                                            });
                                         }
-                                        else
-                                        {
-                                            progressDialog.dismiss();
-                                            YoYo.with(Techniques.Shake)
-                                                    .duration(700)
-                                                    .repeat(1)
-                                                    .playOn(emailCard);
-                                            Alerter.create(SignUpActivity.this)
-                                                    .setText("There's already an account with that Email. Try another!")
-                                                    .setTextAppearance(R.style.InfoAlert)
-                                                    .setBackgroundColorRes(R.color.infoColor)
-                                                    .setIcon(R.drawable.info)
-                                                    .setDuration(3000)
-                                                    .enableSwipeToDismiss()
-                                                    .enableIconPulse(true)
-                                                    .enableVibration(true)
-                                                    .disableOutsideTouch()
-                                                    .enableProgress(true)
-                                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
-                                                    .show();
-                                            return;
+                                    })
+                                    .setNegativeButton("Cancel", R.drawable.material_dialog_cancel, new MaterialDialog.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int which) {
+                                            dialogInterface.dismiss();
                                         }
-                                    }
-                                    else
-                                    {
-                                        progressDialog.dismiss();
-                                        Alerter.create(SignUpActivity.this)
-                                                .setText("Whoops! There was some error in that process!")
-                                                .setTextAppearance(R.style.ErrorAlert)
-                                                .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error)
-                                                .setDuration(3000)
-                                                .enableSwipeToDismiss()
-                                                .enableIconPulse(true)
-                                                .enableVibration(true)
-                                                .disableOutsideTouch()
-                                                .enableProgress(true)
-                                                .setProgressColorInt(getResources().getColor(android.R.color.white))
-                                                .show();
-                                        return;
-                                    }
-                                }
-                            });
+                                    })
+                                    .build();
+                            materialDialog.show();
                         }
                     }
                 });
