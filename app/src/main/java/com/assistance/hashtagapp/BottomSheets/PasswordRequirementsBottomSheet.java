@@ -15,7 +15,7 @@ public class PasswordRequirementsBottomSheet extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.password_requirement_bottom_sheet, container, false);
+        View view = inflater.inflate(R.layout.bottom_sheet_password_requirement, container, false);
         return view;
     }
 }

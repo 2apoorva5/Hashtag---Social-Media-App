@@ -9,10 +9,13 @@
 
     <ImageView
         android:id="@+id/arcView"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="80dp"
         android:scaleType="fitXY"
         android:src="@drawable/shape1"
+        app:layout_constraintBottom_toBottomOf="@+id/verify_otp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +30,7 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:tint="@android:color/black"
-        android:src="@drawable/arrow_back_dark"
+        android:src="@drawable/arrow_back_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +38,7 @@
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/quicksand_medium"
         android:text="Verify phone to proceed!"
         android:textAlignment="center"
@@ -81,20 +84,20 @@
 
     <ImageView
         android:id="@+id/verify_otp"
-        android:layout_width="120dp"
-        android:layout_height="160dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/verify_otp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="240dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/verify_otp_illustration"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/arcView"
-        app:layout_constraintTop_toBottomOf="@+id/arcView"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
 
     <com.mukesh.OtpView
         android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="56dp"
         app:itemCount="6"
         app:itemWidth="44dp"
         app:itemHeight="44dp"

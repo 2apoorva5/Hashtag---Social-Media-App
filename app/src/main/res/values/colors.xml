@@ -18,4 +18,17 @@
     <color name="textColorPrimaryLight">#FFFFFF</color>
     <color name="textColorSecondaryLight">#EDF7FA</color>
 
+    <!--ImageChooser and Cropper Activity-->
+    <color name="dialog_choose_icon_color">#EE4949</color>
+    <color name="dialog_choose_text_color">#000000</color>
+    <color name="ucrop_color_toolbar">#EE4949</color>
+    <color name="ucrop_color_statusbar">#EE4949</color>
+    <color name="ucrop_color_widget_active">#EE4949</color>
+    <color name="ucrop_color_toolbar_widget">#FFFFFF</color>
+    <color name="ucrop_color_active_controls_color">#EE4949</color>
+    <color name="ucrop_color_inactive_controls_color">#738598</color>
+    <color name="ucrop_color_widget_rotate_mid_line">#EE4949</color>
+    <color name="ucrop_color_active_aspect_ratio">#EE4949</color>
+    <color name="ucrop_color_widget_text">#EE4949</color>
+
 </resources>

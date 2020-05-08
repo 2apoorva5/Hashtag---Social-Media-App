@@ -23,6 +23,12 @@
         <item name="material_dialog_negative_button_text_color">@color/colorPrimary</item>
     </style>
 
+    <style name="DateDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="ErrorAlert" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorPrimaryLight</item>
         <item name="android:fontFamily">@font/poppins</item>
@@ -55,9 +61,9 @@
 
     <style name="ProgressText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorPrimaryDark</item>
-        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/quicksand_medium</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="SpotsDialog" parent="android:Theme.DeviceDefault.Dialog">
@@ -65,6 +71,13 @@
         <item name="DialogSpotColor">@color/colorPrimary</item>
         <item name="DialogSpotCount">4</item>
         <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="ChipText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/textColorSecondaryDark</item>
+        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.assistance.hashtagapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,8 +16,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import maes.tech.intentanim.CustomIntent;
@@ -28,6 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    CollectionReference userRef;
 
     Animation topAnimation, bottomAnimation;
 
@@ -67,6 +75,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void initFirebase() {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        userRef = FirebaseFirestore.getInstance().collection("Users");
     }
 
     @Override
@@ -82,11 +91,47 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 if(firebaseUser != null)
                 {
-                    Intent intent = new Intent(SplashScreenActivity.this, NextActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    CustomIntent.customType(SplashScreenActivity.this, "fadein-to-fadeout");
-                    finish();
+                    userRef.document(firebaseAuth.getCurrentUser().getEmail())
+                            .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful())
+                            {
+                                if(task.getResult().exists())
+                                {
+                                    String alias = task.getResult().getData().get("Username").toString();
+                                    if(!alias.equals(""))
+                                    {
+                                        Intent intent = new Intent(SplashScreenActivity.this, NextActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        CustomIntent.customType(SplashScreenActivity.this, "fadein-to-fadeout");
+                                        finish();
+                                    }
+                                    else
+                                    {
+                                        Intent intent = new Intent(SplashScreenActivity.this, EditProfileActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        CustomIntent.customType(SplashScreenActivity.this, "fadein-to-fadeout");
+                                        finish();
+                                    }
+                                }
+                                else
+                                {
+                                    Intent intent = new Intent(SplashScreenActivity.this, ToSignUpActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    CustomIntent.customType(SplashScreenActivity.this, "fadein-to-fadeout");
+                                    finish();
+                                }
+                            }
+                            else
+                            {
+                                finishAffinity();
+                            }
+                        }
+                    });
                 }
                 else {
                     Intent intent = new Intent(SplashScreenActivity.this, ToSignUpActivity.class);

@@ -19,16 +19,18 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:tint="@android:color/black"
-        android:src="@drawable/arrow_back_dark"
+        android:src="@drawable/arrow_back_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/pattern"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/pattern1"
+        android:id="@+id/signin_illustration"
+        android:layout_width="150dp"
+        android:layout_height="130dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/signin_illustration"
+        android:transitionName="signin_signup_illustration_transition"
         app:layout_constraintBottom_toBottomOf="@+id/heading2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/heading1" />
@@ -78,7 +80,7 @@
         android:transitionName="email_card_transition"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pattern">
+        app:layout_constraintTop_toBottomOf="@+id/signin_illustration">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

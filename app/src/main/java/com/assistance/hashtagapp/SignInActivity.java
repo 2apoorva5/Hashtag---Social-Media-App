@@ -7,7 +7,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,10 +26,12 @@ import android.widget.TextView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -47,13 +48,15 @@ import maes.tech.intentanim.CustomIntent;
 
 public class SignInActivity extends AppCompatActivity {
 
-    ImageView backArrow;
+    ImageView backArrow, signinIllustration;
     EditText emailOrMobileField, passwordField;
     MaterialCheckBox showPassword;
     TextView heading1, heading2, content1, content2, content3, forgotPassword, termOfServices, privacyPolicy, signUp;
     ConstraintLayout signIn;
     CardView emailOrMobileCard, passwordCard, signInCard;
+
     FirebaseAuth firebaseAuth;
+    CollectionReference userRef;
 
     AlertDialog progressDialog;
 
@@ -72,13 +75,7 @@ public class SignInActivity extends AppCompatActivity {
 
         initViews();
         initFirebase();
-
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        setActionOnViews();
 
         progressDialog = new SpotsDialog.Builder().setContext(SignInActivity.this)
                 .setMessage("Logging you in..")
@@ -96,13 +93,48 @@ public class SignInActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initViews() {
+        backArrow = findViewById(R.id.arrow_back);
+        heading1 = findViewById(R.id.heading1);
+        heading2 = findViewById(R.id.heading2);
+        signinIllustration = findViewById(R.id.signin_illustration);
+        content1 = findViewById(R.id.content1);
+        content2 = findViewById(R.id.content2);
+        content3 = findViewById(R.id.content3);
+        emailOrMobileField = findViewById(R.id.email_or_mobile_field);
+        passwordField = findViewById(R.id.password_field);
+        showPassword = findViewById(R.id.show_password);
+        forgotPassword = findViewById(R.id.forgot_password);
+        termOfServices = findViewById(R.id.terms_of_service);
+        privacyPolicy = findViewById(R.id.privacy_policy);
+        signIn = findViewById(R.id.sign_in);
+        signUp = findViewById(R.id.sign_up);
+        emailOrMobileCard = findViewById(R.id.email_or_mobile_card);
+        passwordCard = findViewById(R.id.password_card);
+        signInCard = findViewById(R.id.sign_in_card);
+    }
+
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        userRef = FirebaseFirestore.getInstance().collection("Users");
+    }
+
+    private void setActionOnViews() {
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent signUpIntent = new Intent(SignInActivity.this, SignUpActivity.class);
 
-                Pair[] pairs = new Pair[12];
+                Pair[] pairs = new Pair[13];
                 pairs[0] = new Pair<View, String>(heading1, "heading1_transition");
                 pairs[1] = new Pair<View, String>(heading2, "heading2_transition");
                 pairs[2] = new Pair<View, String>(content1, "content1_transition");
@@ -115,6 +147,7 @@ public class SignInActivity extends AppCompatActivity {
                 pairs[9] = new Pair<View, String>(showPassword, "show_password_transition");
                 pairs[10] = new Pair<View, String>(signInCard, "signin_signup_card_transition");
                 pairs[11] = new Pair<View, String>(signUp, "signin_signup_transition");
+                pairs[12] = new Pair<View, String>(signinIllustration, "signin_signup_illustration_transition");
 
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SignInActivity.this, pairs);
 
@@ -148,30 +181,6 @@ public class SignInActivity extends AppCompatActivity {
         passwordField.addTextChangedListener(signinTextWatcher);
     }
 
-    private void initViews() {
-        backArrow = findViewById(R.id.arrow_back);
-        heading1 = findViewById(R.id.heading1);
-        heading2 = findViewById(R.id.heading2);
-        content1 = findViewById(R.id.content1);
-        content2 = findViewById(R.id.content2);
-        content3 = findViewById(R.id.content3);
-        emailOrMobileField = findViewById(R.id.email_or_mobile_field);
-        passwordField = findViewById(R.id.password_field);
-        showPassword = findViewById(R.id.show_password);
-        forgotPassword = findViewById(R.id.forgot_password);
-        termOfServices = findViewById(R.id.terms_of_service);
-        privacyPolicy = findViewById(R.id.privacy_policy);
-        signIn = findViewById(R.id.sign_in);
-        signUp = findViewById(R.id.sign_up);
-        emailOrMobileCard = findViewById(R.id.email_or_mobile_card);
-        passwordCard = findViewById(R.id.password_card);
-        signInCard = findViewById(R.id.sign_in_card);
-    }
-
-    private void initFirebase() {
-        firebaseAuth = FirebaseAuth.getInstance();
-    }
-
     private TextWatcher signinTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -197,8 +206,7 @@ public class SignInActivity extends AppCompatActivity {
                         else if(emailOrMobile.matches("\\d{10}"))
                         {
                             progressDialog.show();
-                            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                            firestore.collection("Users").whereEqualTo("Phone", emailOrMobile)
+                            userRef.whereEqualTo("Mobile", emailOrMobile)
                                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -216,7 +224,7 @@ public class SignInActivity extends AppCompatActivity {
                                                     .setText("Whoa! There's no account with that mobile number!")
                                                     .setTextAppearance(R.style.ErrorAlert)
                                                     .setBackgroundColorRes(R.color.errorColor)
-                                                    .setIcon(R.drawable.error)
+                                                    .setIcon(R.drawable.error_icon)
                                                     .setDuration(3000)
                                                     .enableSwipeToDismiss()
                                                     .enableIconPulse(true)
@@ -237,10 +245,10 @@ public class SignInActivity extends AppCompatActivity {
                                     {
                                         progressDialog.dismiss();
                                         Alerter.create(SignInActivity.this)
-                                                .setText("Whoops! There was some error!")
+                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
                                                 .setTextAppearance(R.style.ErrorAlert)
                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error)
+                                                .setIcon(R.drawable.error_icon)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -251,6 +259,25 @@ public class SignInActivity extends AppCompatActivity {
                                                 .show();
                                         return;
                                     }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressDialog.dismiss();
+                                    Alerter.create(SignInActivity.this)
+                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setTextAppearance(R.style.ErrorAlert)
+                                            .setBackgroundColorRes(R.color.errorColor)
+                                            .setIcon(R.drawable.error_icon)
+                                            .setDuration(3000)
+                                            .enableSwipeToDismiss()
+                                            .enableIconPulse(true)
+                                            .enableVibration(true)
+                                            .disableOutsideTouch()
+                                            .enableProgress(true)
+                                            .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                            .show();
+                                    return;
                                 }
                             });
                         }
@@ -264,7 +291,7 @@ public class SignInActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Email or Mobile number!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error)
+                                    .setIcon(R.drawable.error_icon)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -309,7 +336,7 @@ public class SignInActivity extends AppCompatActivity {
         }
     };
 
-    private void login(String email)
+    private void login(final String email)
     {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithEmailAndPassword(email, passwordField.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -317,18 +344,75 @@ public class SignInActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    progressDialog.dismiss();
-                    startActivity(new Intent(SignInActivity.this, NextActivity.class));
-                    CustomIntent.customType(SignInActivity.this, "left-to-right");
+                    userRef.document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful())
+                            {
+                                String alias = task.getResult().getData().get("Username").toString();
+                                if(!alias.equals(""))
+                                {
+                                    progressDialog.dismiss();
+                                    startActivity(new Intent(SignInActivity.this, NextActivity.class));
+                                    CustomIntent.customType(SignInActivity.this, "fadein-to-fadeout");
+                                    finish();
+                                }
+                                else
+                                {
+                                    progressDialog.dismiss();
+                                    startActivity(new Intent(SignInActivity.this, EditProfileActivity.class));
+                                    CustomIntent.customType(SignInActivity.this, "fadein-to-fadeout");
+                                    finish();
+                                }
+                            }
+                            else
+                            {
+                                progressDialog.dismiss();
+                                Alerter.create(SignInActivity.this)
+                                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                        .setTextAppearance(R.style.ErrorAlert)
+                                        .setBackgroundColorRes(R.color.errorColor)
+                                        .setIcon(R.drawable.error_icon)
+                                        .setDuration(3000)
+                                        .enableSwipeToDismiss()
+                                        .enableIconPulse(true)
+                                        .enableVibration(true)
+                                        .disableOutsideTouch()
+                                        .enableProgress(true)
+                                        .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                        .show();
+                                return;
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Alerter.create(SignInActivity.this)
+                                    .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                    .setTextAppearance(R.style.ErrorAlert)
+                                    .setBackgroundColorRes(R.color.errorColor)
+                                    .setIcon(R.drawable.error_icon)
+                                    .setDuration(3000)
+                                    .enableSwipeToDismiss()
+                                    .enableIconPulse(true)
+                                    .enableVibration(true)
+                                    .disableOutsideTouch()
+                                    .enableProgress(true)
+                                    .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                    .show();
+                            return;
+                        }
+                    });
                 }
                 else
                 {
                     progressDialog.dismiss();
                     Alerter.create(SignInActivity.this)
-                            .setText("Whoops! Seems like you've got invalid credentials!")
+                            .setText("Whoa! Seems like you've got invalid credentials!")
                             .setTextAppearance(R.style.ErrorAlert)
                             .setBackgroundColorRes(R.color.errorColor)
-                            .setIcon(R.drawable.error)
+                            .setIcon(R.drawable.error_icon)
                             .setDuration(3000)
                             .enableSwipeToDismiss()
                             .enableIconPulse(true)
@@ -340,11 +424,31 @@ public class SignInActivity extends AppCompatActivity {
                     return;
                 }
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Alerter.create(SignInActivity.this)
+                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                        .setTextAppearance(R.style.ErrorAlert)
+                        .setBackgroundColorRes(R.color.errorColor)
+                        .setIcon(R.drawable.error_icon)
+                        .setDuration(3000)
+                        .enableSwipeToDismiss()
+                        .enableIconPulse(true)
+                        .enableVibration(true)
+                        .disableOutsideTouch()
+                        .enableProgress(true)
+                        .setProgressColorInt(getResources().getColor(android.R.color.white))
+                        .show();
+                return;
+            }
         });
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finishAffinity();
     }
 }

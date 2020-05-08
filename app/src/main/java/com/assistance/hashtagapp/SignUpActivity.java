@@ -7,7 +7,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +28,7 @@ import com.assistance.hashtagapp.Common.Common;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +48,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    ImageView backArrow;
+    ImageView backArrow, signupIllustration;
     EditText nameField, emailField, mobileField, createPasswordField, confirmPasswordField;
     MaterialCheckBox showPassword;
     TextView heading1, heading2, content1, content2, content3, termOfServices, privacyPolicy, signIn;
@@ -83,13 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         initViews();
         initFirebase();
-
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        setActionOnViews();
 
         progressDialog = new SpotsDialog.Builder().setContext(SignUpActivity.this)
                 .setMessage("Sending Verification Code..")
@@ -110,13 +104,52 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void initViews() {
+        backArrow = findViewById(R.id.arrow_back);
+        heading1 = findViewById(R.id.heading1);
+        heading2 = findViewById(R.id.heading2);
+        signupIllustration = findViewById(R.id.signup_illustration);
+        content1 = findViewById(R.id.content1);
+        content2 = findViewById(R.id.content2);
+        content3 = findViewById(R.id.content3);
+        nameField = findViewById(R.id.name_field);
+        emailField = findViewById(R.id.email_field);
+        mobileField = findViewById(R.id.mobile_field);
+        createPasswordField = findViewById(R.id.create_password_field);
+        confirmPasswordField = findViewById(R.id.confirm_password_field);
+        nameCard = findViewById(R.id.name_card);
+        emailCard = findViewById(R.id.email_card);
+        mobileCard = findViewById(R.id.mobile_card);
+        createPasswordCard = findViewById(R.id.create_password_card);
+        confirmPasswordCard = findViewById(R.id.confirm_password_card);
+        showPassword = findViewById(R.id.show_password);
+        termOfServices = findViewById(R.id.terms_of_service);
+        privacyPolicy = findViewById(R.id.privacy_policy);
+        signUp = findViewById(R.id.sign_up);
+        signUpCard = findViewById(R.id.sign_up_card);
+        signIn = findViewById(R.id.sign_in);
+    }
+
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+    }
+
+    private void setActionOnViews() {
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent signUpIntent = new Intent(SignUpActivity.this, SignInActivity.class);
 
-                Pair[] pairs = new Pair[12];
+                Pair[] pairs = new Pair[13];
                 pairs[0] = new Pair<View, String>(heading1, "heading1_transition");
                 pairs[1] = new Pair<View, String>(heading2, "heading2_transition");
                 pairs[2] = new Pair<View, String>(content1, "content1_transition");
@@ -129,6 +162,7 @@ public class SignUpActivity extends AppCompatActivity {
                 pairs[9] = new Pair<View, String>(showPassword, "show_password_transition");
                 pairs[10] = new Pair<View, String>(signUpCard, "signin_signup_card_transition");
                 pairs[11] = new Pair<View, String>(signIn, "signin_signup_transition");
+                pairs[12] = new Pair<View, String>(signupIllustration, "signin_signup_illustration_transition");
 
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SignUpActivity.this, pairs);
 
@@ -157,35 +191,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void initViews() {
-        backArrow = findViewById(R.id.arrow_back);
-        heading1 = findViewById(R.id.heading1);
-        heading2 = findViewById(R.id.heading2);
-        content1 = findViewById(R.id.content1);
-        content2 = findViewById(R.id.content2);
-        content3 = findViewById(R.id.content3);
-        nameField = findViewById(R.id.name_field);
-        emailField = findViewById(R.id.email_field);
-        mobileField = findViewById(R.id.mobile_field);
-        createPasswordField = findViewById(R.id.create_password_field);
-        confirmPasswordField = findViewById(R.id.confirm_password_field);
-        nameCard = findViewById(R.id.name_card);
-        emailCard = findViewById(R.id.email_card);
-        mobileCard = findViewById(R.id.mobile_card);
-        createPasswordCard = findViewById(R.id.create_password_card);
-        confirmPasswordCard = findViewById(R.id.confirm_password_card);
-        showPassword = findViewById(R.id.show_password);
-        termOfServices = findViewById(R.id.terms_of_service);
-        privacyPolicy = findViewById(R.id.privacy_policy);
-        signUp = findViewById(R.id.sign_up);
-        signUpCard = findViewById(R.id.sign_up_card);
-        signIn = findViewById(R.id.sign_in);
-    }
-
-    private void initFirebase() {
-        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     private TextWatcher signupTextWatcher = new TextWatcher() {
@@ -218,7 +223,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Email!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error)
+                                    .setIcon(R.drawable.error_icon)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -239,7 +244,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Mobile Number!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error)
+                                    .setIcon(R.drawable.error_icon)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -264,7 +269,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setText("Those passwords didn't match. Try again!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error)
+                                    .setIcon(R.drawable.error_icon)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -285,7 +290,7 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                         else {
                             MaterialDialog materialDialog = new MaterialDialog.Builder(SignUpActivity.this)
-                                    .setMessage("A verification code will be sent to the mobile number provided. Standard rates may apply in the process.")
+                                    .setMessage("A verification code will be sent to the mobile number provided, i.e., +91-" + mobile + ". Standard rates may apply in the process. Also, you'll get 5 chances at a time.")
                                     .setCancelable(false)
                                     .setAnimation(R.raw.send_sms)
                                     .setPositiveButton("Okay", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
@@ -319,7 +324,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                                     .setText("There's already an account with that Email. Try another!")
                                                                     .setTextAppearance(R.style.InfoAlert)
                                                                     .setBackgroundColorRes(R.color.infoColor)
-                                                                    .setIcon(R.drawable.info)
+                                                                    .setIcon(R.drawable.info_icon)
                                                                     .setDuration(3000)
                                                                     .enableSwipeToDismiss()
                                                                     .enableIconPulse(true)
@@ -335,10 +340,10 @@ public class SignUpActivity extends AppCompatActivity {
                                                     {
                                                         progressDialog.dismiss();
                                                         Alerter.create(SignUpActivity.this)
-                                                                .setText("Whoops! There was some error in that process!")
+                                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
                                                                 .setTextAppearance(R.style.ErrorAlert)
                                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                                .setIcon(R.drawable.error)
+                                                                .setIcon(R.drawable.error_icon)
                                                                 .setDuration(3000)
                                                                 .enableSwipeToDismiss()
                                                                 .enableIconPulse(true)
@@ -349,6 +354,25 @@ public class SignUpActivity extends AppCompatActivity {
                                                                 .show();
                                                         return;
                                                     }
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    progressDialog.dismiss();
+                                                    Alerter.create(SignUpActivity.this)
+                                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                            .setTextAppearance(R.style.ErrorAlert)
+                                                            .setBackgroundColorRes(R.color.errorColor)
+                                                            .setIcon(R.drawable.error_icon)
+                                                            .setDuration(3000)
+                                                            .enableSwipeToDismiss()
+                                                            .enableIconPulse(true)
+                                                            .enableVibration(true)
+                                                            .disableOutsideTouch()
+                                                            .enableProgress(true)
+                                                            .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                                            .show();
+                                                    return;
                                                 }
                                             });
                                         }
@@ -420,5 +444,6 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finishAffinity();
     }
 }

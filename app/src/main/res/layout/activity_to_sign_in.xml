@@ -8,24 +8,36 @@
     android:background="@drawable/welcome_screen_bg"
     tools:context=".ToSignInActivity">
 
+    <ImageView
+        android:id="@+id/signin_illustration"
+        android:layout_width="280dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/signin_illustration"
+        android:scaleType="fitCenter"
+        android:transitionName="signin_signup_illustration_transition"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/heading1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/quicksand_bold"
         android:text="Hi there!"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/textColorPrimaryDark"
-        android:textSize="48sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:transitionName="heading1_transition"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/signin_illustration" />
 
     <TextView
         android:id="@+id/heading2"
@@ -35,10 +47,10 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/quicksand"
         android:text="Sign in to continue!"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/textColorSecondaryDark"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:transitionName="heading2_transition"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,12 +62,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
         android:transitionName="signin_signup_card_transition"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heading2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,36 +109,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="2dp"
         android:fontFamily="@font/quicksand"
         android:text="Don't have an account? "
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/textColorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:transitionName="content1_transition"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:fontFamily="@font/quicksand_medium"
+        android:padding="6dp"
         android:text="Create one!"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="8dp"
         android:transitionName="signin_signup_transition"
-        app:layout_constraintBottom_toBottomOf="@+id/content1"
-        app:layout_constraintStart_toEndOf="@+id/content1"
-        app:layout_constraintTop_toTopOf="@+id/content1" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

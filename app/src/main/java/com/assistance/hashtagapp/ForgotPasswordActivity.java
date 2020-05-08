@@ -6,23 +6,20 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
@@ -63,13 +60,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         initViews();
         initFirebase();
-
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        setActionOnViews();
 
         progressDialog = new SpotsDialog.Builder().setContext(ForgotPasswordActivity.this)
                 .setMessage("Sending password reset link..")
@@ -86,8 +77,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
             }
         });
-
-        emailField.addTextChangedListener(resetPasswordTextWatcher);
     }
 
     private void initViews() {
@@ -101,6 +90,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private void initFirebase() {
         firebaseAuth = FirebaseAuth.getInstance();
+    }
+
+    private void setActionOnViews() {
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        emailField.addTextChangedListener(resetPasswordTextWatcher);
     }
 
     private TextWatcher resetPasswordTextWatcher = new TextWatcher() {
@@ -129,7 +129,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Email!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error)
+                                    .setIcon(R.drawable.error_icon)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -181,10 +181,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                             {
                                                                 progressDialog.dismiss();
                                                                 Alerter.create(ForgotPasswordActivity.this)
-                                                                        .setText("Whoa! There was some error in that process!")
+                                                                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
                                                                         .setTextAppearance(R.style.ErrorAlert)
                                                                         .setBackgroundColorRes(R.color.errorColor)
-                                                                        .setIcon(R.drawable.error)
+                                                                        .setIcon(R.drawable.error_icon)
                                                                         .setDuration(3000)
                                                                         .enableSwipeToDismiss()
                                                                         .enableIconPulse(true)
@@ -196,7 +196,26 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                                 return;
                                                             }
                                                         }
-                                                    });
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    progressDialog.dismiss();
+                                                    Alerter.create(ForgotPasswordActivity.this)
+                                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                            .setTextAppearance(R.style.ErrorAlert)
+                                                            .setBackgroundColorRes(R.color.errorColor)
+                                                            .setIcon(R.drawable.error_icon)
+                                                            .setDuration(3000)
+                                                            .enableSwipeToDismiss()
+                                                            .enableIconPulse(true)
+                                                            .enableVibration(true)
+                                                            .disableOutsideTouch()
+                                                            .enableProgress(true)
+                                                            .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                                            .show();
+                                                    return;
+                                                }
+                                            });
                                         }
                                         else
                                         {
@@ -206,10 +225,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                     .repeat(1)
                                                     .playOn(emailCard);
                                             Alerter.create(ForgotPasswordActivity.this)
-                                                    .setText("Whoa! We didn't find any account using that email!")
+                                                    .setText("Whoa! We didn't find any account using that Email!")
                                                     .setTextAppearance(R.style.InfoAlert)
                                                     .setBackgroundColorRes(R.color.infoColor)
-                                                    .setIcon(R.drawable.info)
+                                                    .setIcon(R.drawable.info_icon)
                                                     .setDuration(3000)
                                                     .enableSwipeToDismiss()
                                                     .enableIconPulse(true)
@@ -225,10 +244,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     {
                                         progressDialog.dismiss();
                                         Alerter.create(ForgotPasswordActivity.this)
-                                                .setText("Whoops! There was some error in that process!")
+                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
                                                 .setTextAppearance(R.style.ErrorAlert)
                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error)
+                                                .setIcon(R.drawable.error_icon)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -239,6 +258,25 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                 .show();
                                         return;
                                     }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressDialog.dismiss();
+                                    Alerter.create(ForgotPasswordActivity.this)
+                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setTextAppearance(R.style.ErrorAlert)
+                                            .setBackgroundColorRes(R.color.errorColor)
+                                            .setIcon(R.drawable.error_icon)
+                                            .setDuration(3000)
+                                            .enableSwipeToDismiss()
+                                            .enableIconPulse(true)
+                                            .enableVibration(true)
+                                            .disableOutsideTouch()
+                                            .enableProgress(true)
+                                            .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                            .show();
+                                    return;
                                 }
                             });
                         }
@@ -267,15 +305,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         }
     };
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        YoYo.with(Techniques.Shake)
-                .duration(700)
-                .repeat(3)
-                .playOn(forgotPassword);
-    }
 
     @Override
     public void onBackPressed() {
