@@ -7,8 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
 
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
 
@@ -21,12 +26,6 @@
         <item name="material_dialog_positive_button_color">@color/colorPrimary</item>
         <item name="material_dialog_positive_button_text_color">@android:color/white</item>
         <item name="material_dialog_negative_button_text_color">@color/colorPrimary</item>
-    </style>
-
-    <style name="DateDialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <style name="ErrorAlert" parent="TextAppearance.AppCompat">

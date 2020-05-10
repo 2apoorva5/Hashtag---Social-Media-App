@@ -54,7 +54,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class VerifyOTPActivity extends AppCompatActivity {
 
-    ImageView backArrow, verifyOTP;
+    ImageView close, verifyOTP;
     TextView mobileNumber, resend;
     OtpView otpView;
     ConstraintLayout verify;
@@ -107,7 +107,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        backArrow = findViewById(R.id.arrow_back);
+        close = findViewById(R.id.close);
         mobileNumber = findViewById(R.id.mobile_number);
         resend = findViewById(R.id.resend_otp);
         verifyOTP = findViewById(R.id.verify_otp);
@@ -122,7 +122,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
     }
 
     private void setActionOnViews() {
-        backArrow.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -440,11 +440,6 @@ public class VerifyOTPActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        CustomIntent.customType(VerifyOTPActivity.this, "fadein-to-fadeout");
+        finishAffinity();
     }
 }

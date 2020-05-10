@@ -48,7 +48,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class SignInActivity extends AppCompatActivity {
 
-    ImageView backArrow, signinIllustration;
+    ImageView close, signinIllustration;
     EditText emailOrMobileField, passwordField;
     MaterialCheckBox showPassword;
     TextView heading1, heading2, content1, content2, content3, forgotPassword, termOfServices, privacyPolicy, signUp;
@@ -64,6 +64,9 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        getWindow().setEnterTransition(null);
+        getWindow().setExitTransition(null);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -96,7 +99,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        backArrow = findViewById(R.id.arrow_back);
+        close = findViewById(R.id.close);
         heading1 = findViewById(R.id.heading1);
         heading2 = findViewById(R.id.heading2);
         signinIllustration = findViewById(R.id.signin_illustration);
@@ -122,7 +125,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void setActionOnViews() {
-        backArrow.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -152,6 +155,7 @@ public class SignInActivity extends AppCompatActivity {
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SignInActivity.this, pairs);
 
                 startActivity(signUpIntent, activityOptions.toBundle());
+                finish();
             }
         });
 

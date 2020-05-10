@@ -28,6 +28,8 @@ public class ToSignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_sign_in);
 
+        getWindow().setExitTransition(null);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.background));
@@ -67,6 +69,7 @@ public class ToSignInActivity extends AppCompatActivity {
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(ToSignInActivity.this, pairs);
 
                 startActivity(signInIntent, activityOptions.toBundle());
+                finish();
             }
         });
 
@@ -75,6 +78,7 @@ public class ToSignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(ToSignInActivity.this, ToSignUpActivity.class));
                 CustomIntent.customType(ToSignInActivity.this, "fadein-to-fadeout");
+                finish();
             }
         });
     }

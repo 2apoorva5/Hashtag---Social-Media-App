@@ -9,7 +9,7 @@
     tools:context=".SignUpActivity">
 
     <ImageView
-        android:id="@+id/arrow_back"
+        android:id="@+id/close"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="12dp"
@@ -19,20 +19,22 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:tint="@android:color/black"
-        android:src="@drawable/arrow_back_icon"
+        android:src="@drawable/close_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/signup_illustration"
-        android:layout_width="160dp"
+        android:layout_width="0dp"
         android:layout_height="120dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:scaleType="centerInside"
         android:src="@drawable/signup_illustration"
         android:transitionName="signin_signup_illustration_transition"
         app:layout_constraintBottom_toBottomOf="@+id/heading2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/heading2"
         app:layout_constraintTop_toTopOf="@+id/heading1" />
 
     <TextView
@@ -49,7 +51,7 @@
         android:textStyle="bold"
         android:transitionName="heading1_transition"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arrow_back" />
+        app:layout_constraintTop_toBottomOf="@+id/close" />
 
     <TextView
         android:id="@+id/heading2"

@@ -48,7 +48,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    ImageView backArrow, signupIllustration;
+    ImageView close, signupIllustration;
     EditText nameField, emailField, mobileField, createPasswordField, confirmPasswordField;
     MaterialCheckBox showPassword;
     TextView heading1, heading2, content1, content2, content3, termOfServices, privacyPolicy, signIn;
@@ -72,6 +72,9 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        getWindow().setEnterTransition(null);
+        getWindow().setExitTransition(null);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -107,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        backArrow = findViewById(R.id.arrow_back);
+        close = findViewById(R.id.close);
         heading1 = findViewById(R.id.heading1);
         heading2 = findViewById(R.id.heading2);
         signupIllustration = findViewById(R.id.signup_illustration);
@@ -137,7 +140,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void setActionOnViews() {
-        backArrow.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
@@ -167,6 +170,7 @@ public class SignUpActivity extends AppCompatActivity {
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SignUpActivity.this, pairs);
 
                 startActivity(signUpIntent, activityOptions.toBundle());
+                finish();
             }
         });
 
@@ -290,7 +294,7 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                         else {
                             MaterialDialog materialDialog = new MaterialDialog.Builder(SignUpActivity.this)
-                                    .setMessage("A verification code will be sent to the mobile number provided, i.e., +91-" + mobile + ". Standard rates may apply in the process. Also, you'll get 5 chances at a time.")
+                                    .setMessage("A 6-digit verification code will be sent to the mobile number provided, i.e., +91-" + mobile + ". Standard rates may apply.")
                                     .setCancelable(false)
                                     .setAnimation(R.raw.send_sms)
                                     .setPositiveButton("Okay", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
@@ -312,6 +316,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                             Common.signUpPassword = createPassword;
                                                             startActivity(new Intent(SignUpActivity.this, VerifyOTPActivity.class));
                                                             CustomIntent.customType(SignUpActivity.this, "fadein-to-fadeout");
+                                                            finish();
                                                         }
                                                         else
                                                         {

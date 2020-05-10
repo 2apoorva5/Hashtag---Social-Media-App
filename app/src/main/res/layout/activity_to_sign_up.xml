@@ -5,34 +5,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/welcome_screen_bg"
+    android:background="@color/background"
     tools:context=".ToSignUpActivity">
 
     <ImageView
         android:id="@+id/signup_illustration"
-        android:layout_width="280dp"
-        android:layout_height="240dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/signup_illustration"
-        android:scaleType="fitCenter"
         android:transitionName="signin_signup_illustration_transition"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/heading1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/quicksand_bold"
         android:text="Welcome!"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/textColorPrimaryDark"
-        android:textSize="40sp"
+        android:textSize="48sp"
         android:textStyle="bold"
         android:transitionName="heading1_transition"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,10 +61,10 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/sign_up_card"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:transitionName="signin_signup_card_transition"
         app:cardBackgroundColor="@color/colorPrimary"

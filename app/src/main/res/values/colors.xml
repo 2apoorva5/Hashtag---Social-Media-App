@@ -8,6 +8,7 @@
     <color name="otpView">#b2ebf2</color>
 
     <color name="background">#E3F6F5</color>
+    <color name="backgroundDark">#3b6978</color>
     <color name="errorColor">#B71C1C</color>
     <color name="infoColor">#0F4C81</color>
     <color name="successColor">#00BDAA</color>

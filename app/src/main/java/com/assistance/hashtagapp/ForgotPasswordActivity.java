@@ -172,6 +172,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                                             @Override
                                                                             public void onClick(DialogInterface dialogInterface, int which) {
                                                                                 dialogInterface.dismiss();
+                                                                                onBackPressed();
                                                                             }
                                                                         })
                                                                         .build();
