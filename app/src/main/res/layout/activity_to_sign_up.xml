@@ -10,12 +10,12 @@
 
     <ImageView
         android:id="@+id/signup_illustration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="310dp"
+        android:layout_height="275dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="140dp"
         android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         android:src="@drawable/signup_illustration"
         android:transitionName="signin_signup_illustration_transition"
         app:layout_constraintEnd_toEndOf="parent"

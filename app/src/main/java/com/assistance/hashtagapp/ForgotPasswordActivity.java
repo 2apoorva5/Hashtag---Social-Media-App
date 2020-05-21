@@ -158,6 +158,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                             {
                                                                 progressDialog.dismiss();
                                                                 MaterialDialog materialDialog = new MaterialDialog.Builder(ForgotPasswordActivity.this)
+                                                                        .setTitle("Reset Password!")
                                                                         .setMessage("A password reset link has been sent to " + email)
                                                                         .setAnimation(R.raw.send_sms)
                                                                         .setCancelable(false)

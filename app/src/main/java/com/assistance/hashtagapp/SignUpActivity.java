@@ -294,10 +294,11 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                         else {
                             MaterialDialog materialDialog = new MaterialDialog.Builder(SignUpActivity.this)
-                                    .setMessage("A 6-digit verification code will be sent to the mobile number provided, i.e., +91-" + mobile + ". Standard rates may apply.")
+                                    .setTitle("Send Verification Code?")
+                                    .setMessage("A 6-digit verification code will be sent to the mobile number +91-" + mobile + ". Standard rates may apply.")
                                     .setCancelable(false)
                                     .setAnimation(R.raw.send_sms)
-                                    .setPositiveButton("Okay", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
+                                    .setPositiveButton("Send", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int which) {
                                             dialogInterface.dismiss();

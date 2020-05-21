@@ -303,8 +303,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                     public void onSuccess(Void aVoid) {
                                                         progressDialog.dismiss();
                                                         MaterialDialog materialDialog = new MaterialDialog.Builder(VerifyOTPActivity.this)
-                                                                .setMessage("Cool! You've been registered with us. Now, set up a username in the next process to get going.")
-                                                                .setAnimation(R.raw.registered)
+                                                                .setTitle("Registered - Set Username!")
+                                                                .setMessage("Cool! You've been registered with us. Now, set up a username to get going.")
+                                                                .setAnimation(R.raw.confirm)
                                                                 .setCancelable(false)
                                                                 .setPositiveButton("Proceed", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
                                                                     @Override

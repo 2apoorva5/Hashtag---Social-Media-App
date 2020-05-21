@@ -226,9 +226,10 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MaterialDialog dialog = new MaterialDialog.Builder(EditProfileActivity.this)
-                        .setTitle("Choose an action to continue!")
+                        .setTitle("Choose Action!")
+                        .setMessage("Choose an action to continue!")
                         .setCancelable(false)
-                        .setAnimation(R.raw.profile_photo)
+                        .setAnimation(R.raw.take_photo)
                         .setPositiveButton("Edit", R.drawable.material_dialog_camera, new MaterialDialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {

@@ -5,10 +5,10 @@
     <color name="colorAccent">#05DFD7</color>
     <color name="colorAccentDark">#0DABB3</color>
 
-    <color name="otpView">#b2ebf2</color>
+    <color name="otpView">#B2EBF2</color>
 
     <color name="background">#E3F6F5</color>
-    <color name="backgroundDark">#3b6978</color>
+    <color name="backgroundDark">#3B6978</color>
     <color name="errorColor">#B71C1C</color>
     <color name="infoColor">#0F4C81</color>
     <color name="successColor">#00BDAA</color>
