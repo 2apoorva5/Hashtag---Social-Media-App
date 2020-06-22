@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".EditProfileActivity">
+    tools:context=".LoginSignUp.EditProfileActivity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -30,7 +30,7 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/close_icon"
+        android:src="@drawable/ic_cancel_light"
         android:tint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +60,7 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/confirm_icon"
+        android:src="@drawable/ic_confirm"
         android:tint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -83,7 +83,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/camera_icon"
+        android:src="@drawable/ic_camera"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -157,7 +157,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/edit_icon"
+                android:drawableEnd="@drawable/ic_edit"
                 android:drawablePadding="16dp"
                 android:drawableTint="@color/inactiveColor"
                 android:fontFamily="@font/quicksand"
@@ -219,7 +219,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/edit_icon"
+                android:drawableEnd="@drawable/ic_edit"
                 android:drawablePadding="16dp"
                 android:drawableTint="@color/inactiveColor"
                 android:fontFamily="@font/quicksand"
@@ -283,7 +283,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/edit_icon"
+                android:drawableEnd="@drawable/ic_edit"
                 android:drawablePadding="16dp"
                 android:drawableTint="@color/inactiveColor"
                 android:fontFamily="@font/quicksand"
@@ -374,9 +374,12 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:text="Male"
-                    app:rippleColor="@color/colorAccent"
+                    android:textColor="@color/chip_text_color"
+                    app:rippleColor="@color/colorPrimary"
                     android:textAppearance="@style/ChipText"
-                    app:chipBackgroundColor="@android:color/white"
+                    app:chipBackgroundColor="@color/chip_background_color"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/chip_stroke_color"
                     app:chipStartPadding="16dp"
                     app:chipEndPadding="16dp" />
 
@@ -386,9 +389,12 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:text="Female"
-                    app:rippleColor="@color/colorAccent"
+                    android:textColor="@color/chip_text_color"
+                    app:rippleColor="@color/colorPrimary"
                     android:textAppearance="@style/ChipText"
-                    app:chipBackgroundColor="@android:color/white"
+                    app:chipBackgroundColor="@color/chip_background_color"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/chip_stroke_color"
                     app:chipStartPadding="16dp"
                     app:chipEndPadding="16dp"/>
 
@@ -398,9 +404,12 @@
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:text="Other"
-                    app:rippleColor="@color/colorAccent"
+                    android:textColor="@color/chip_text_color"
+                    app:rippleColor="@color/colorPrimary"
                     android:textAppearance="@style/ChipText"
-                    app:chipBackgroundColor="@android:color/white"
+                    app:chipBackgroundColor="@color/chip_background_color"
+                    app:chipStrokeWidth="1dp"
+                    app:chipStrokeColor="@color/chip_stroke_color"
                     app:chipStartPadding="16dp"
                     app:chipEndPadding="16dp"/>
 
@@ -442,7 +451,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:drawableEnd="@drawable/edit_icon"
+                android:drawableEnd="@drawable/ic_edit"
                 android:drawableTint="@color/inactiveColor"
                 android:drawablePadding="16dp"
                 android:fontFamily="@font/quicksand"

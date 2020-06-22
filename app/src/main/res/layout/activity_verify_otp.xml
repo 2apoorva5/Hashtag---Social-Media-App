@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
-    tools:context=".VerifyOTPActivity">
+    tools:context=".LoginSignUp.VerifyOTPActivity">
 
     <ImageView
         android:id="@+id/arcView"
@@ -30,7 +30,7 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:tint="@android:color/black"
-        android:src="@drawable/close_icon"
+        android:src="@drawable/ic_cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,37 +92,34 @@
         android:layout_height="170dp"
         android:layout_marginTop="32dp"
         android:scaleType="centerInside"
-        android:src="@drawable/verify_otp_illustration"
+        android:src="@drawable/illustration_verify_otp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
 
-    <com.mukesh.OtpView
-        android:id="@+id/otp_view"
+    <com.chaos.view.PinView
+        android:id="@+id/verify_otp_pinview"
+        style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        app:itemCount="6"
-        app:itemWidth="44dp"
-        app:itemHeight="44dp"
-        app:itemSpacing="4dp"
-        app:viewType="rectangle"
-        android:cursorVisible="false"
-        android:itemBackground="@color/otpView"
+        android:cursorVisible="true"
+        android:fontFamily="@font/poppins"
         android:inputType="number"
-        android:textAlignment="center"
+        android:itemBackground="@color/colorAccentLight"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:textAllCaps="true"
-        android:textSize="24sp"
-        android:textColor="@color/textColorPrimaryDark"
-        android:fontFamily="@font/quicksand_medium"
-        app:lineWidth="1dp"
-        app:lineColor="@color/otpView"
-        app:itemRadius="8dp"
-        android:imeOptions="actionDone"
-        app:layout_constraintEnd_toEndOf="@+id/verify_otp"
-        app:layout_constraintStart_toStartOf="@+id/verify_otp"
-        app:layout_constraintTop_toBottomOf="@+id/verify_otp"/>
+        app:cursorColor="@android:color/black"
+        app:hideLineWhenFilled="true"
+        app:itemCount="6"
+        app:itemHeight="40dp"
+        app:itemRadius="4dp"
+        app:itemWidth="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_otp"
+        app:lineColor="@android:color/black" />
 
     <TextView
         android:id="@+id/resend_otp"
@@ -142,9 +139,9 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintEnd_toEndOf="@+id/otp_view"
-        app:layout_constraintStart_toStartOf="@+id/otp_view"
-        app:layout_constraintTop_toBottomOf="@+id/otp_view" />
+        app:layout_constraintEnd_toEndOf="@+id/verify_otp_pinview"
+        app:layout_constraintStart_toStartOf="@+id/verify_otp_pinview"
+        app:layout_constraintTop_toBottomOf="@+id/verify_otp_pinview" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/verify_card"
@@ -154,8 +151,8 @@
         app:cardBackgroundColor="@color/successColor"
         app:cardCornerRadius="24dp"
         app:cardElevation="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/otp_view"
-        app:layout_constraintStart_toStartOf="@+id/otp_view"
+        app:layout_constraintEnd_toEndOf="@+id/verify_otp_pinview"
+        app:layout_constraintStart_toStartOf="@+id/verify_otp_pinview"
         app:layout_constraintTop_toBottomOf="@+id/resend_otp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

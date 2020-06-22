@@ -96,14 +96,13 @@
         tools:replace="android:icon, android:allowBackup"
         tools:targetApi="q">
         <activity android:name=".ParentActivity" />
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".NextActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".VerifyOTPActivity" />
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".ToSignInActivity" />
-        <activity android:name=".ToSignUpActivity" />
+        <activity android:name=".LoginSignUp.EditProfileActivity" />
+        <activity android:name=".LoginSignUp.ForgotPasswordActivity" />
+        <activity android:name=".LoginSignUp.VerifyOTPActivity" />
+        <activity android:name=".LoginSignUp.SignInActivity" />
+        <activity android:name=".LoginSignUp.SignUpActivity" />
+        <activity android:name=".LoginSignUp.ToSignInActivity" />
+        <activity android:name=".LoginSignUp.ToSignUpActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

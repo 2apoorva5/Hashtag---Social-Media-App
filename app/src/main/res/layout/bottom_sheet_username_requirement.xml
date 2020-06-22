@@ -35,7 +35,7 @@
         android:layout_height="64dp"
         android:layout_marginTop="32dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/username_icon"
+        android:src="@drawable/ic_username"
         android:tint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

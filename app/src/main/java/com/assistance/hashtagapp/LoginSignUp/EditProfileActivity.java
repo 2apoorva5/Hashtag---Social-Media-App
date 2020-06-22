@@ -1,4 +1,4 @@
-package com.assistance.hashtagapp;
+package com.assistance.hashtagapp.LoginSignUp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +11,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.assistance.hashtagapp.BottomSheets.UsernameRequirementsBottomSheet;
+import com.assistance.hashtagapp.ParentActivity;
+import com.assistance.hashtagapp.R;
 import com.bumptech.glide.Glide;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -85,25 +86,17 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        //make translucent statusBar on kitkat devices
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-        //make fully Android Transparent Status bar
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+        //Transparent StatusBar
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         initViews();
         initFirebase();
         setActionOnViews();
 
         progressDialog = new SpotsDialog.Builder().setContext(EditProfileActivity.this)
-                .setMessage("Saving your profile..")
+                .setMessage("Saving profile...")
                 .setCancelable(false)
                 .setTheme(R.style.SpotsDialog)
                 .build();
@@ -127,10 +120,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 if(e != null)
                 {
                     Alerter.create(EditProfileActivity.this)
-                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                            .setText("Whoa! That ran into some error. Could be a network issue.")
                             .setTextAppearance(R.style.ErrorAlert)
                             .setBackgroundColorRes(R.color.errorColor)
-                            .setIcon(R.drawable.error_icon)
+                            .setIcon(R.drawable.ic_error)
                             .setDuration(3000)
                             .enableSwipeToDismiss()
                             .enableIconPulse(true)
@@ -230,14 +223,14 @@ public class EditProfileActivity extends AppCompatActivity {
                         .setMessage("Choose an action to continue!")
                         .setCancelable(false)
                         .setAnimation(R.raw.take_photo)
-                        .setPositiveButton("Edit", R.drawable.material_dialog_camera, new MaterialDialog.OnClickListener() {
+                        .setPositiveButton("Edit", R.drawable.ic_material_dialog_camera, new MaterialDialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
                                 dialogInterface.dismiss();
                                 selectImage();
                             }
                         })
-                        .setNegativeButton("Remove", R.drawable.material_dialog_remove, new MaterialDialog.OnClickListener() {
+                        .setNegativeButton("Remove", R.drawable.ic_material_dialog_remove, new MaterialDialog.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
                                 dialogInterface.dismiss();
@@ -317,7 +310,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                                     .setText("That username you chose already exists. Try a different one!")
                                                     .setTextAppearance(R.style.InfoAlert)
                                                     .setBackgroundColorRes(R.color.infoColor)
-                                                    .setIcon(R.drawable.info_icon)
+                                                    .setIcon(R.drawable.ic_info)
                                                     .setDuration(3000)
                                                     .enableSwipeToDismiss()
                                                     .enableIconPulse(true)
@@ -333,10 +326,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                     {
                                         progressDialog.dismiss();
                                         Alerter.create(EditProfileActivity.this)
-                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                                 .setTextAppearance(R.style.ErrorAlert)
                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error_icon)
+                                                .setIcon(R.drawable.ic_error)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -353,10 +346,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
                                     Alerter.create(EditProfileActivity.this)
-                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                             .setTextAppearance(R.style.ErrorAlert)
                                             .setBackgroundColorRes(R.color.errorColor)
-                                            .setIcon(R.drawable.error_icon)
+                                            .setIcon(R.drawable.ic_error)
                                             .setDuration(3000)
                                             .enableSwipeToDismiss()
                                             .enableIconPulse(true)
@@ -405,7 +398,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                                     .setText("That username you chose already exists. Try a different one!")
                                                     .setTextAppearance(R.style.InfoAlert)
                                                     .setBackgroundColorRes(R.color.infoColor)
-                                                    .setIcon(R.drawable.info_icon)
+                                                    .setIcon(R.drawable.ic_info)
                                                     .setDuration(3000)
                                                     .enableSwipeToDismiss()
                                                     .enableIconPulse(true)
@@ -421,10 +414,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                     {
                                         progressDialog.dismiss();
                                         Alerter.create(EditProfileActivity.this)
-                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                                 .setTextAppearance(R.style.ErrorAlert)
                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error_icon)
+                                                .setIcon(R.drawable.ic_error)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -441,10 +434,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
                                     Alerter.create(EditProfileActivity.this)
-                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                             .setTextAppearance(R.style.ErrorAlert)
                                             .setBackgroundColorRes(R.color.errorColor)
-                                            .setIcon(R.drawable.error_icon)
+                                            .setIcon(R.drawable.ic_error)
                                             .setDuration(3000)
                                             .enableSwipeToDismiss()
                                             .enableIconPulse(true)
@@ -476,7 +469,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     .setText("This field can't be empty.")
                                     .setTextAppearance(R.style.InfoAlert)
                                     .setBackgroundColorRes(R.color.infoColor)
-                                    .setIcon(R.drawable.info_icon)
+                                    .setIcon(R.drawable.ic_info)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -497,7 +490,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     .setText("This field can't be empty.")
                                     .setTextAppearance(R.style.InfoAlert)
                                     .setBackgroundColorRes(R.color.infoColor)
-                                    .setIcon(R.drawable.info_icon)
+                                    .setIcon(R.drawable.ic_info)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -525,7 +518,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     .setText("This field can't be empty.")
                                     .setTextAppearance(R.style.InfoAlert)
                                     .setBackgroundColorRes(R.color.infoColor)
-                                    .setIcon(R.drawable.info_icon)
+                                    .setIcon(R.drawable.ic_info)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -546,7 +539,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     .setText("This field can't be empty.")
                                     .setTextAppearance(R.style.InfoAlert)
                                     .setBackgroundColorRes(R.color.infoColor)
-                                    .setIcon(R.drawable.info_icon)
+                                    .setIcon(R.drawable.ic_info)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -588,10 +581,10 @@ public class EditProfileActivity extends AppCompatActivity {
         else if(resultCode == ImagePicker.RESULT_ERROR)
         {
             Alerter.create(EditProfileActivity.this)
-                    .setText("Whoa! That ran into some error_icon.")
+                    .setText("Whoa! That ran into some error.")
                     .setTextAppearance(R.style.ErrorAlert)
                     .setBackgroundColorRes(R.color.errorColor)
-                    .setIcon(R.drawable.error_icon)
+                    .setIcon(R.drawable.ic_error)
                     .setDuration(3000)
                     .enableSwipeToDismiss()
                     .enableIconPulse(true)
@@ -666,7 +659,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
                                                                 progressDialog.dismiss();
-                                                                startActivity(new Intent(EditProfileActivity.this, NextActivity.class));
+                                                                startActivity(new Intent(EditProfileActivity.this, ParentActivity.class));
                                                                 CustomIntent.customType(EditProfileActivity.this, "fadein-to-fadeout");
                                                             }
                                                         })
@@ -675,10 +668,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                                             public void onFailure(@NonNull Exception e) {
                                                                 progressDialog.dismiss();
                                                                 Alerter.create(EditProfileActivity.this)
-                                                                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                                        .setText("Whoa! That ran into some error. Could be a network issue.")
                                                                         .setTextAppearance(R.style.ErrorAlert)
                                                                         .setBackgroundColorRes(R.color.errorColor)
-                                                                        .setIcon(R.drawable.error_icon)
+                                                                        .setIcon(R.drawable.ic_error)
                                                                         .setDuration(3000)
                                                                         .enableSwipeToDismiss()
                                                                         .enableIconPulse(true)
@@ -695,10 +688,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                             {
                                                 progressDialog.dismiss();
                                                 Alerter.create(EditProfileActivity.this)
-                                                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                        .setText("Whoa! That ran into some error. Could be a network issue.")
                                                         .setTextAppearance(R.style.ErrorAlert)
                                                         .setBackgroundColorRes(R.color.errorColor)
-                                                        .setIcon(R.drawable.error_icon)
+                                                        .setIcon(R.drawable.ic_error)
                                                         .setDuration(3000)
                                                         .enableSwipeToDismiss()
                                                         .enableIconPulse(true)
@@ -715,10 +708,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             progressDialog.dismiss();
                                             Alerter.create(EditProfileActivity.this)
-                                                    .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                    .setText("Whoa! That ran into some error. Could be a network issue.")
                                                     .setTextAppearance(R.style.ErrorAlert)
                                                     .setBackgroundColorRes(R.color.errorColor)
-                                                    .setIcon(R.drawable.error_icon)
+                                                    .setIcon(R.drawable.ic_error)
                                                     .setDuration(3000)
                                                     .enableSwipeToDismiss()
                                                     .enableIconPulse(true)
@@ -736,10 +729,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
                                     Alerter.create(EditProfileActivity.this)
-                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                             .setTextAppearance(R.style.ErrorAlert)
                                             .setBackgroundColorRes(R.color.errorColor)
-                                            .setIcon(R.drawable.error_icon)
+                                            .setIcon(R.drawable.ic_error)
                                             .setDuration(3000)
                                             .enableSwipeToDismiss()
                                             .enableIconPulse(true)
@@ -758,10 +751,10 @@ public class EditProfileActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
                             Alerter.create(EditProfileActivity.this)
-                                    .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                    .setText("Whoa! That ran into some error. Could be a network issue.")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error_icon)
+                                    .setIcon(R.drawable.ic_error)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -795,7 +788,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         progressDialog.dismiss();
-                                        startActivity(new Intent(EditProfileActivity.this, NextActivity.class));
+                                        startActivity(new Intent(EditProfileActivity.this, ParentActivity.class));
                                         CustomIntent.customType(EditProfileActivity.this, "fadein-to-fadeout");
                                     }
                                 })
@@ -804,10 +797,10 @@ public class EditProfileActivity extends AppCompatActivity {
                                     public void onFailure(@NonNull Exception e) {
                                         progressDialog.dismiss();
                                         Alerter.create(EditProfileActivity.this)
-                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                                 .setTextAppearance(R.style.ErrorAlert)
                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error_icon)
+                                                .setIcon(R.drawable.ic_error)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -824,10 +817,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     {
                         progressDialog.dismiss();
                         Alerter.create(EditProfileActivity.this)
-                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                 .setTextAppearance(R.style.ErrorAlert)
                                 .setBackgroundColorRes(R.color.errorColor)
-                                .setIcon(R.drawable.error_icon)
+                                .setIcon(R.drawable.ic_error)
                                 .setDuration(3000)
                                 .enableSwipeToDismiss()
                                 .enableIconPulse(true)
@@ -844,10 +837,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     progressDialog.dismiss();
                     Alerter.create(EditProfileActivity.this)
-                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                            .setText("Whoa! That ran into some error. Could be a network issue.")
                             .setTextAppearance(R.style.ErrorAlert)
                             .setBackgroundColorRes(R.color.errorColor)
-                            .setIcon(R.drawable.error_icon)
+                            .setIcon(R.drawable.ic_error)
                             .setDuration(3000)
                             .enableSwipeToDismiss()
                             .enableIconPulse(true)

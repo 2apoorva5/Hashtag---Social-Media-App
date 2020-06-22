@@ -1,4 +1,4 @@
-package com.assistance.hashtagapp;
+package com.assistance.hashtagapp.LoginSignUp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.assistance.hashtagapp.BottomSheets.PasswordRequirementsBottomSheet;
-import com.assistance.hashtagapp.Common.Common;
+import com.assistance.hashtagapp.R;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,20 +75,16 @@ public class SignUpActivity extends AppCompatActivity {
         getWindow().setEnterTransition(null);
         getWindow().setExitTransition(null);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.background));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.background));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         initViews();
         initFirebase();
         setActionOnViews();
 
         progressDialog = new SpotsDialog.Builder().setContext(SignUpActivity.this)
-                .setMessage("Sending Verification Code..")
+                .setMessage("Sending Verification Code...")
                 .setCancelable(false)
                 .setTheme(R.style.SpotsDialog)
                 .build();
@@ -227,7 +222,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Email!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error_icon)
+                                    .setIcon(R.drawable.ic_error)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -248,7 +243,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Mobile Number!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error_icon)
+                                    .setIcon(R.drawable.ic_error)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -273,7 +268,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setText("Those passwords didn't match. Try again!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error_icon)
+                                    .setIcon(R.drawable.ic_error)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -298,7 +293,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     .setMessage("A 6-digit verification code will be sent to the mobile number +91-" + mobile + ". Standard rates may apply.")
                                     .setCancelable(false)
                                     .setAnimation(R.raw.send_sms)
-                                    .setPositiveButton("Send", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
+                                    .setPositiveButton("Send", R.drawable.ic_material_dialog_okay, new MaterialDialog.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int which) {
                                             dialogInterface.dismiss();
@@ -311,11 +306,12 @@ public class SignUpActivity extends AppCompatActivity {
                                                         if(task.getResult().getSignInMethods().isEmpty())
                                                         {
                                                             progressDialog.dismiss();
-                                                            Common.signUpName = name;
-                                                            Common.signUpEmail = email;
-                                                            Common.signUpMobile = mobile;
-                                                            Common.signUpPassword = createPassword;
-                                                            startActivity(new Intent(SignUpActivity.this, VerifyOTPActivity.class));
+                                                            Intent intent = new Intent(SignUpActivity.this, VerifyOTPActivity.class);
+                                                            intent.putExtra("name", name);
+                                                            intent.putExtra("email", email);
+                                                            intent.putExtra("mobile", "+91" + mobile);
+                                                            intent.putExtra("password", createPassword);
+                                                            startActivity(intent);
                                                             CustomIntent.customType(SignUpActivity.this, "fadein-to-fadeout");
                                                             finish();
                                                         }
@@ -330,7 +326,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                                     .setText("There's already an account with that Email. Try another!")
                                                                     .setTextAppearance(R.style.InfoAlert)
                                                                     .setBackgroundColorRes(R.color.infoColor)
-                                                                    .setIcon(R.drawable.info_icon)
+                                                                    .setIcon(R.drawable.ic_info)
                                                                     .setDuration(3000)
                                                                     .enableSwipeToDismiss()
                                                                     .enableIconPulse(true)
@@ -346,10 +342,10 @@ public class SignUpActivity extends AppCompatActivity {
                                                     {
                                                         progressDialog.dismiss();
                                                         Alerter.create(SignUpActivity.this)
-                                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                                                 .setTextAppearance(R.style.ErrorAlert)
                                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                                .setIcon(R.drawable.error_icon)
+                                                                .setIcon(R.drawable.ic_error)
                                                                 .setDuration(3000)
                                                                 .enableSwipeToDismiss()
                                                                 .enableIconPulse(true)
@@ -366,10 +362,10 @@ public class SignUpActivity extends AppCompatActivity {
                                                 public void onFailure(@NonNull Exception e) {
                                                     progressDialog.dismiss();
                                                     Alerter.create(SignUpActivity.this)
-                                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                                             .setTextAppearance(R.style.ErrorAlert)
                                                             .setBackgroundColorRes(R.color.errorColor)
-                                                            .setIcon(R.drawable.error_icon)
+                                                            .setIcon(R.drawable.ic_error)
                                                             .setDuration(3000)
                                                             .enableSwipeToDismiss()
                                                             .enableIconPulse(true)
@@ -383,7 +379,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             });
                                         }
                                     })
-                                    .setNegativeButton("Cancel", R.drawable.material_dialog_cancel, new MaterialDialog.OnClickListener() {
+                                    .setNegativeButton("Cancel", R.drawable.ic_material_dialog_cancel, new MaterialDialog.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int which) {
                                             dialogInterface.dismiss();

@@ -3,6 +3,7 @@
     <color name="colorPrimary">#EE4949</color>
     <color name="colorPrimaryDark">#EE4949</color>
     <color name="colorAccent">#05DFD7</color>
+    <color name="colorAccentLight">#D5FBF9</color>
     <color name="colorAccentDark">#0DABB3</color>
 
     <color name="otpView">#B2EBF2</color>

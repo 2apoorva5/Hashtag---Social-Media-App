@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".SignInActivity">
+    tools:context=".LoginSignUp.SignInActivity">
 
     <ImageView
         android:id="@+id/close"
@@ -19,7 +19,7 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:tint="@android:color/black"
-        android:src="@drawable/close_icon"
+        android:src="@drawable/ic_cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:scaleType="centerInside"
-        android:src="@drawable/signin_illustration"
+        android:src="@drawable/illustration_signin"
         android:transitionName="signin_signup_illustration_transition"
         app:layout_constraintBottom_toBottomOf="@+id/heading2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,7 @@
                 android:id="@+id/email_or_mobile_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/account_icon"
+                android:drawableStart="@drawable/ic_account"
                 android:drawablePadding="16dp"
                 android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"
@@ -145,7 +145,7 @@
                 android:id="@+id/password_field"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/password_icon"
+                android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="16dp"
                 android:drawableTint="@android:color/black"
                 android:background="@android:color/transparent"

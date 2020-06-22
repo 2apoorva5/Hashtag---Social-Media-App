@@ -1,4 +1,4 @@
-package com.assistance.hashtagapp;
+package com.assistance.hashtagapp.LoginSignUp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.assistance.hashtagapp.ParentActivity;
+import com.assistance.hashtagapp.R;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -68,20 +69,16 @@ public class SignInActivity extends AppCompatActivity {
         getWindow().setEnterTransition(null);
         getWindow().setExitTransition(null);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.background));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.background));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         initViews();
         initFirebase();
         setActionOnViews();
 
         progressDialog = new SpotsDialog.Builder().setContext(SignInActivity.this)
-                .setMessage("Logging you in..")
+                .setMessage("Logging you in...")
                 .setCancelable(false)
                 .setTheme(R.style.SpotsDialog)
                 .build();
@@ -228,7 +225,7 @@ public class SignInActivity extends AppCompatActivity {
                                                     .setText("Whoa! There's no account with that mobile number!")
                                                     .setTextAppearance(R.style.ErrorAlert)
                                                     .setBackgroundColorRes(R.color.errorColor)
-                                                    .setIcon(R.drawable.error_icon)
+                                                    .setIcon(R.drawable.ic_error)
                                                     .setDuration(3000)
                                                     .enableSwipeToDismiss()
                                                     .enableIconPulse(true)
@@ -249,10 +246,10 @@ public class SignInActivity extends AppCompatActivity {
                                     {
                                         progressDialog.dismiss();
                                         Alerter.create(SignInActivity.this)
-                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                                 .setTextAppearance(R.style.ErrorAlert)
                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error_icon)
+                                                .setIcon(R.drawable.ic_error)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -269,10 +266,10 @@ public class SignInActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
                                     Alerter.create(SignInActivity.this)
-                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                             .setTextAppearance(R.style.ErrorAlert)
                                             .setBackgroundColorRes(R.color.errorColor)
-                                            .setIcon(R.drawable.error_icon)
+                                            .setIcon(R.drawable.ic_error)
                                             .setDuration(3000)
                                             .enableSwipeToDismiss()
                                             .enableIconPulse(true)
@@ -295,7 +292,7 @@ public class SignInActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Email or Mobile number!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error_icon)
+                                    .setIcon(R.drawable.ic_error)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -357,7 +354,7 @@ public class SignInActivity extends AppCompatActivity {
                                 if(!alias.equals(""))
                                 {
                                     progressDialog.dismiss();
-                                    startActivity(new Intent(SignInActivity.this, NextActivity.class));
+                                    startActivity(new Intent(SignInActivity.this, ParentActivity.class));
                                     CustomIntent.customType(SignInActivity.this, "fadein-to-fadeout");
                                     finish();
                                 }
@@ -373,10 +370,10 @@ public class SignInActivity extends AppCompatActivity {
                             {
                                 progressDialog.dismiss();
                                 Alerter.create(SignInActivity.this)
-                                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                        .setText("Whoa! That ran into some error. Could be a network issue.")
                                         .setTextAppearance(R.style.ErrorAlert)
                                         .setBackgroundColorRes(R.color.errorColor)
-                                        .setIcon(R.drawable.error_icon)
+                                        .setIcon(R.drawable.ic_error)
                                         .setDuration(3000)
                                         .enableSwipeToDismiss()
                                         .enableIconPulse(true)
@@ -393,10 +390,10 @@ public class SignInActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
                             Alerter.create(SignInActivity.this)
-                                    .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                    .setText("Whoa! That ran into some error. Could be a network issue.")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error_icon)
+                                    .setIcon(R.drawable.ic_error)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -416,7 +413,7 @@ public class SignInActivity extends AppCompatActivity {
                             .setText("Whoa! Seems like you've got invalid credentials!")
                             .setTextAppearance(R.style.ErrorAlert)
                             .setBackgroundColorRes(R.color.errorColor)
-                            .setIcon(R.drawable.error_icon)
+                            .setIcon(R.drawable.ic_error)
                             .setDuration(3000)
                             .enableSwipeToDismiss()
                             .enableIconPulse(true)
@@ -433,10 +430,10 @@ public class SignInActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
                 Alerter.create(SignInActivity.this)
-                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                        .setText("Whoa! That ran into some error. Could be a network issue.")
                         .setTextAppearance(R.style.ErrorAlert)
                         .setBackgroundColorRes(R.color.errorColor)
-                        .setIcon(R.drawable.error_icon)
+                        .setIcon(R.drawable.ic_error)
                         .setDuration(3000)
                         .enableSwipeToDismiss()
                         .enableIconPulse(true)

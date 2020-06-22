@@ -1,4 +1,4 @@
-package com.assistance.hashtagapp;
+package com.assistance.hashtagapp.LoginSignUp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.assistance.hashtagapp.R;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,20 +50,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         initViews();
         initFirebase();
         setActionOnViews();
 
         progressDialog = new SpotsDialog.Builder().setContext(ForgotPasswordActivity.this)
-                .setMessage("Sending password reset link..")
+                .setMessage("Sending password reset link...")
                 .setCancelable(false)
                 .setTheme(R.style.SpotsDialog)
                 .build();
@@ -129,7 +125,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     .setText("Please enter a valid Email!")
                                     .setTextAppearance(R.style.ErrorAlert)
                                     .setBackgroundColorRes(R.color.errorColor)
-                                    .setIcon(R.drawable.error_icon)
+                                    .setIcon(R.drawable.ic_error)
                                     .setDuration(3000)
                                     .enableSwipeToDismiss()
                                     .enableIconPulse(true)
@@ -162,14 +158,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                                         .setMessage("A password reset link has been sent to " + email)
                                                                         .setAnimation(R.raw.send_sms)
                                                                         .setCancelable(false)
-                                                                        .setPositiveButton("Okay", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
+                                                                        .setPositiveButton("Okay", R.drawable.ic_material_dialog_okay, new MaterialDialog.OnClickListener() {
                                                                             @Override
                                                                             public void onClick(DialogInterface dialogInterface, int which) {
                                                                                 dialogInterface.dismiss();
                                                                                 onBackPressed();
                                                                             }
                                                                         })
-                                                                        .setNegativeButton("Cancel", R.drawable.material_dialog_cancel, new MaterialDialog.OnClickListener() {
+                                                                        .setNegativeButton("Cancel", R.drawable.ic_material_dialog_cancel, new MaterialDialog.OnClickListener() {
                                                                             @Override
                                                                             public void onClick(DialogInterface dialogInterface, int which) {
                                                                                 dialogInterface.dismiss();
@@ -183,10 +179,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                             {
                                                                 progressDialog.dismiss();
                                                                 Alerter.create(ForgotPasswordActivity.this)
-                                                                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                                        .setText("Whoa! That ran into some error. Could be a network issue.")
                                                                         .setTextAppearance(R.style.ErrorAlert)
                                                                         .setBackgroundColorRes(R.color.errorColor)
-                                                                        .setIcon(R.drawable.error_icon)
+                                                                        .setIcon(R.drawable.ic_error)
                                                                         .setDuration(3000)
                                                                         .enableSwipeToDismiss()
                                                                         .enableIconPulse(true)
@@ -203,10 +199,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                 public void onFailure(@NonNull Exception e) {
                                                     progressDialog.dismiss();
                                                     Alerter.create(ForgotPasswordActivity.this)
-                                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                                             .setTextAppearance(R.style.ErrorAlert)
                                                             .setBackgroundColorRes(R.color.errorColor)
-                                                            .setIcon(R.drawable.error_icon)
+                                                            .setIcon(R.drawable.ic_error)
                                                             .setDuration(3000)
                                                             .enableSwipeToDismiss()
                                                             .enableIconPulse(true)
@@ -230,7 +226,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                                     .setText("Whoa! We didn't find any account using that Email!")
                                                     .setTextAppearance(R.style.InfoAlert)
                                                     .setBackgroundColorRes(R.color.infoColor)
-                                                    .setIcon(R.drawable.info_icon)
+                                                    .setIcon(R.drawable.ic_info)
                                                     .setDuration(3000)
                                                     .enableSwipeToDismiss()
                                                     .enableIconPulse(true)
@@ -246,10 +242,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     {
                                         progressDialog.dismiss();
                                         Alerter.create(ForgotPasswordActivity.this)
-                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                                 .setTextAppearance(R.style.ErrorAlert)
                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                .setIcon(R.drawable.error_icon)
+                                                .setIcon(R.drawable.ic_error)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -266,10 +262,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
                                     Alerter.create(ForgotPasswordActivity.this)
-                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                             .setTextAppearance(R.style.ErrorAlert)
                                             .setBackgroundColorRes(R.color.errorColor)
-                                            .setIcon(R.drawable.error_icon)
+                                            .setIcon(R.drawable.ic_error)
                                             .setDuration(3000)
                                             .enableSwipeToDismiss()
                                             .enableIconPulse(true)

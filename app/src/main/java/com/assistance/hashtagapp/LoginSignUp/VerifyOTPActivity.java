@@ -1,4 +1,4 @@
-package com.assistance.hashtagapp;
+package com.assistance.hashtagapp.LoginSignUp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,20 +7,21 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.assistance.hashtagapp.Common.Common;
+import com.assistance.hashtagapp.R;
+import com.chaos.view.PinView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthCredential;
@@ -33,8 +34,6 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mukesh.OnOtpCompletionListener;
-import com.mukesh.OtpView;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 import com.tapadoo.alerter.Alerter;
@@ -55,63 +54,68 @@ import maes.tech.intentanim.CustomIntent;
 public class VerifyOTPActivity extends AppCompatActivity {
 
     ImageView close, verifyOTP;
-    TextView mobileNumber, resend;
-    OtpView otpView;
+    TextView mobileNumber, resendOtp;
+    PinView otpPinView;
     ConstraintLayout verify;
     CardView verifyCard;
 
     Timer timer;
     int count = 60;
-    AlertDialog progressDialog;
 
-    String mVerificationId;
-    PhoneAuthProvider.ForceResendingToken mResendToken;
-    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallback;
+    PhoneAuthProvider.ForceResendingToken resendingToken;
+
+    AlertDialog progressDialog;
 
     FirebaseAuth firebaseAuth;
     CollectionReference userRef;
+
+    String name, email, mobile, password;
+    String codeBySystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-        }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        progressDialog = new SpotsDialog.Builder().setContext(VerifyOTPActivity.this)
+                .setMessage("Verifying Mobile...")
+                .setCancelable(false)
+                .setTheme(R.style.SpotsDialog)
+                .build();
+
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        email = intent.getStringExtra("email");
+        mobile = intent.getStringExtra("mobile");
+        password = intent.getStringExtra("password");
 
         initViews();
         initFirebase();
         setActionOnViews();
-        sendOTP();
-
-        progressDialog = new SpotsDialog.Builder().setContext(VerifyOTPActivity.this)
-                .setMessage("Verifying Mobile Number..")
-                .setCancelable(false)
-                .setTheme(R.style.SpotsDialog)
-                .build();
 
         KeyboardVisibilityEvent.setEventListener(VerifyOTPActivity.this, new KeyboardVisibilityEventListener() {
             @Override
             public void onVisibilityChanged(boolean isOpen) {
                 if(!isOpen)
                 {
-                    otpView.clearFocus();
+                    otpPinView.clearFocus();
                 }
             }
         });
+
+        sendVerificationCodeToUser(mobile);
     }
 
     private void initViews() {
         close = findViewById(R.id.close);
         mobileNumber = findViewById(R.id.mobile_number);
-        resend = findViewById(R.id.resend_otp);
+        resendOtp = findViewById(R.id.resend_otp);
         verifyOTP = findViewById(R.id.verify_otp);
-        otpView = findViewById(R.id.otp_view);
+        otpPinView = findViewById(R.id.verify_otp_pinview);
         verify = findViewById(R.id.verify);
         verifyCard = findViewById(R.id.verify_card);
     }
@@ -129,7 +133,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
             }
         });
 
-        mobileNumber.setText(String.format("+91%s", Common.signUpMobile));
+        mobileNumber.setText(String.format(mobile));
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -140,24 +144,24 @@ public class VerifyOTPActivity extends AppCompatActivity {
                     public void run() {
                         if(count == 0)
                         {
-                            resend.setText("Resend OTP");
-                            resend.setAlpha(1.0f);
-                            resend.setEnabled(true);
-                            resend.setOnClickListener(new View.OnClickListener() {
+                            resendOtp.setText("Resend OTP");
+                            resendOtp.setAlpha(1.0f);
+                            resendOtp.setEnabled(true);
+                            resendOtp.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     resendOTP();
-                                    resend.setEnabled(false);
-                                    resend.setAlpha(0.5f);
+                                    resendOtp.setEnabled(false);
+                                    resendOtp.setAlpha(0.5f);
                                     count = 60;
                                 }
                             });
                         }
                         else
                         {
-                            resend.setText(String.format("Resend OTP in %d", count));
-                            resend.setAlpha(0.5f);
-                            resend.setEnabled(false);
+                            resendOtp.setText(String.format("Resend OTP in %d", count));
+                            resendOtp.setAlpha(0.5f);
+                            resendOtp.setEnabled(false);
                             count--;
                         }
                     }
@@ -165,122 +169,114 @@ public class VerifyOTPActivity extends AppCompatActivity {
             }
         },0,1000);
 
-        otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
+        verify.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onOtpCompleted(final String otp) {
-                if(otp.length() == 6)
-                {
-                    verify.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UIUtil.hideKeyboard(VerifyOTPActivity.this);
-                            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
-                            progressDialog.show();
-                            signInWithPhoneAuthCredential(credential);
-                        }
-                    });
-                }
-                else
-                {
-                    verify.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            UIUtil.hideKeyboard(VerifyOTPActivity.this);
-                            if(otp.isEmpty() || otp.length() < 6)
-                            {
-                                YoYo.with(Techniques.RubberBand)
-                                        .duration(700)
-                                        .repeat(1)
-                                        .playOn(otpView);
-                            }
-                        }
-                    });
+            public void onClick(View v) {
+                UIUtil.hideKeyboard(VerifyOTPActivity.this);
+
+                String codeEnteredByUser = otpPinView.getText().toString();
+                if(!codeEnteredByUser.isEmpty() && codeEnteredByUser.length() == 6) {
+                    verifyCode(codeEnteredByUser);
+                } else {
+                    YoYo.with(Techniques.RubberBand)
+                            .duration(700)
+                            .repeat(1)
+                            .playOn(otpPinView);
                 }
             }
         });
     }
 
-    private void sendOTP()
-    {
-        mCallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-            @Override
-            public void onVerificationCompleted(PhoneAuthCredential credential) {
-
-            }
-
-            @Override
-            public void onVerificationFailed(FirebaseException e) {
-                if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    progressDialog.dismiss();
-                    Alerter.create(VerifyOTPActivity.this)
-                            .setText("Whoa! Seems like you've got an invalid code!")
-                            .setTextAppearance(R.style.ErrorAlert)
-                            .setBackgroundColorRes(R.color.errorColor)
-                            .setIcon(R.drawable.error_icon)
-                            .setDuration(3000)
-                            .enableSwipeToDismiss()
-                            .enableIconPulse(true)
-                            .enableVibration(true)
-                            .disableOutsideTouch()
-                            .enableProgress(true)
-                            .setProgressColorInt(getResources().getColor(android.R.color.white))
-                            .show();
-                    return;
-                } else if (e instanceof FirebaseTooManyRequestsException) {
-                    progressDialog.dismiss();
-                    Alerter.create(VerifyOTPActivity.this)
-                            .setText("Too many requests at the moment. Try again after some time!")
-                            .setTextAppearance(R.style.InfoAlert)
-                            .setBackgroundColorRes(R.color.infoColor)
-                            .setIcon(R.drawable.info_icon)
-                            .setDuration(3000)
-                            .enableSwipeToDismiss()
-                            .enableIconPulse(true)
-                            .enableVibration(true)
-                            .disableOutsideTouch()
-                            .enableProgress(true)
-                            .setProgressColorInt(getResources().getColor(android.R.color.white))
-                            .show();
-                    return;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks =
+            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                @Override
+                public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                    super.onCodeSent(s, forceResendingToken);
+                    resendingToken = forceResendingToken;
+                    codeBySystem = s;
                 }
-            }
 
-            @Override
-            public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken token) {
-                mVerificationId = verificationId;
-                mResendToken = token;
-            }
-        };
+                @Override
+                public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                    String code = phoneAuthCredential.getSmsCode();
+                    if(code!=null) {
+                        otpPinView.setText(code);
+                        verifyCode(code);
+                    }
+                }
 
+                @Override
+                public void onVerificationFailed(@NonNull FirebaseException e) {
+                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                        progressDialog.dismiss();
+                        Alerter.create(VerifyOTPActivity.this)
+                                .setText("Whoa! Seems like you've got an invalid code!")
+                                .setTextAppearance(R.style.ErrorAlert)
+                                .setBackgroundColorRes(R.color.errorColor)
+                                .setIcon(R.drawable.ic_error)
+                                .setDuration(3000)
+                                .enableSwipeToDismiss()
+                                .enableIconPulse(true)
+                                .enableVibration(true)
+                                .disableOutsideTouch()
+                                .enableProgress(true)
+                                .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                .show();
+                        return;
+                    } else if (e instanceof FirebaseTooManyRequestsException) {
+                        progressDialog.dismiss();
+                        Alerter.create(VerifyOTPActivity.this)
+                                .setText("Too many requests at the moment. Try again after some time!")
+                                .setTextAppearance(R.style.InfoAlert)
+                                .setBackgroundColorRes(R.color.infoColor)
+                                .setIcon(R.drawable.ic_info)
+                                .setDuration(3000)
+                                .enableSwipeToDismiss()
+                                .enableIconPulse(true)
+                                .enableVibration(true)
+                                .disableOutsideTouch()
+                                .enableProgress(true)
+                                .setProgressColorInt(getResources().getColor(android.R.color.white))
+                                .show();
+                        return;
+                    }
+                }
+            };
+
+    private void sendVerificationCodeToUser(String mobile) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91" + Common.signUpMobile,
+                mobile,
                 60,
                 TimeUnit.SECONDS,
-                VerifyOTPActivity.this,
-                mCallback);
+                TaskExecutors.MAIN_THREAD,
+                mCallbacks
+        );
     }
 
     private void resendOTP()
     {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91" + Common.signUpMobile,
+                mobile,
                 60,
                 TimeUnit.SECONDS,
-                VerifyOTPActivity.this,
-                mCallback, mResendToken);
+                TaskExecutors.MAIN_THREAD,
+                mCallbacks, resendingToken);
     }
 
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential)
-    {
+    private void verifyCode(String code) {
+        progressDialog.show();
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeBySystem, code);
+        signInUsingCredential(credential);
+    }
+
+    private void signInUsingCredential(PhoneAuthCredential credential) {
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(VerifyOTPActivity.this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
+                        if(task.isSuccessful()) {
                             FirebaseUser user = task.getResult().getUser();
-                            AuthCredential authCredential = EmailAuthProvider.getCredential(Common.signUpEmail, Common.signUpPassword);
+                            AuthCredential authCredential = EmailAuthProvider.getCredential(email, password);
                             assert user != null;
                             user.linkWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -288,26 +284,28 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                     if(task.isSuccessful())
                                     {
                                         Map<String, Object> map = new HashMap<>();
-                                        map.put("Name", Common.signUpName);
+                                        map.put("Name", name);
                                         map.put("Username", "");
                                         map.put("About", "");
                                         map.put("Gender", "");
                                         map.put("DOB", "");
-                                        map.put("Email", Common.signUpEmail);
-                                        map.put("Mobile", Common.signUpMobile);
+                                        map.put("Email", email);
+                                        map.put("Mobile", mobile);
                                         map.put("ProfilePic", "");
 
-                                        userRef.document(Common.signUpEmail).set(map)
+                                        userRef.document(email).set(map)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         progressDialog.dismiss();
+                                                        timer.cancel();
+                                                        verify.setEnabled(false);
                                                         MaterialDialog materialDialog = new MaterialDialog.Builder(VerifyOTPActivity.this)
                                                                 .setTitle("Registered - Set Username!")
                                                                 .setMessage("Cool! You've been registered with us. Now, set up a username to get going.")
                                                                 .setAnimation(R.raw.confirm)
                                                                 .setCancelable(false)
-                                                                .setPositiveButton("Proceed", R.drawable.material_dialog_okay, new MaterialDialog.OnClickListener() {
+                                                                .setPositiveButton("Proceed", R.drawable.ic_material_dialog_okay, new MaterialDialog.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(DialogInterface dialogInterface, int which) {
                                                                         dialogInterface.dismiss();
@@ -316,7 +314,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                                         finish();
                                                                     }
                                                                 })
-                                                                .setNegativeButton("Cancel", R.drawable.material_dialog_cancel, new MaterialDialog.OnClickListener() {
+                                                                .setNegativeButton("Cancel", R.drawable.ic_material_dialog_cancel, new MaterialDialog.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(DialogInterface dialogInterface, int which) {
                                                                         dialogInterface.dismiss();
@@ -332,10 +330,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                     public void onFailure(@NonNull Exception e) {
                                                         progressDialog.dismiss();
                                                         Alerter.create(VerifyOTPActivity.this)
-                                                                .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                                                .setText("Whoa! That ran into some error. Could be a network issue.")
                                                                 .setTextAppearance(R.style.ErrorAlert)
                                                                 .setBackgroundColorRes(R.color.errorColor)
-                                                                .setIcon(R.drawable.error_icon)
+                                                                .setIcon(R.drawable.ic_error)
                                                                 .setDuration(3000)
                                                                 .enableSwipeToDismiss()
                                                                 .enableIconPulse(true)
@@ -355,7 +353,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                                 .setText("Seems like this mobile number has already been used. Try another!")
                                                 .setTextAppearance(R.style.InfoAlert)
                                                 .setBackgroundColorRes(R.color.infoColor)
-                                                .setIcon(R.drawable.info_icon)
+                                                .setIcon(R.drawable.ic_info)
                                                 .setDuration(3000)
                                                 .enableSwipeToDismiss()
                                                 .enableIconPulse(true)
@@ -372,10 +370,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.dismiss();
                                     Alerter.create(VerifyOTPActivity.this)
-                                            .setText("Whoa! That ran into some error_icon. Could be a network issue.")
+                                            .setText("Whoa! That ran into some error. Could be a network issue.")
                                             .setTextAppearance(R.style.ErrorAlert)
                                             .setBackgroundColorRes(R.color.errorColor)
-                                            .setIcon(R.drawable.error_icon)
+                                            .setIcon(R.drawable.ic_error)
                                             .setDuration(3000)
                                             .enableSwipeToDismiss()
                                             .enableIconPulse(true)
@@ -387,17 +385,14 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                     return;
                                 }
                             });
-                        }
-                        else
-                        {
-                            if(task.getException() instanceof FirebaseAuthInvalidCredentialsException)
-                            {
+                        } else {
+                            if(task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 progressDialog.dismiss();
                                 Alerter.create(VerifyOTPActivity.this)
-                                        .setText("Whoa! Seems like you've got an invalid code!")
+                                        .setText("Whoa! Verification Failed. Try Again!")
                                         .setTextAppearance(R.style.ErrorAlert)
                                         .setBackgroundColorRes(R.color.errorColor)
-                                        .setIcon(R.drawable.error_icon)
+                                        .setIcon(R.drawable.ic_error)
                                         .setDuration(3000)
                                         .enableSwipeToDismiss()
                                         .enableIconPulse(true)
@@ -410,26 +405,13 @@ public class VerifyOTPActivity extends AppCompatActivity {
                             }
                         }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Alerter.create(VerifyOTPActivity.this)
-                        .setText("Whoa! That ran into some error_icon. Could be a network issue.")
-                        .setTextAppearance(R.style.ErrorAlert)
-                        .setBackgroundColorRes(R.color.errorColor)
-                        .setIcon(R.drawable.error_icon)
-                        .setDuration(3000)
-                        .enableSwipeToDismiss()
-                        .enableIconPulse(true)
-                        .enableVibration(true)
-                        .disableOutsideTouch()
-                        .enableProgress(true)
-                        .setProgressColorInt(getResources().getColor(android.R.color.white))
-                        .show();
-                return;
-            }
-        });
+                });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        timer.cancel();
     }
 
     @Override
