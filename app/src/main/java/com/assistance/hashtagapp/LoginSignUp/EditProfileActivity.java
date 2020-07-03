@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -246,7 +247,7 @@ public class EditProfileActivity extends AppCompatActivity {
         userAlias.addTextChangedListener(editProfileTextWatcher);
 
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("SELECT YOUR DOB");
+        builder.setTitleText("Select your DOB");
         final MaterialDatePicker materialDatePicker = builder.build();
 
         userDob.setOnClickListener(new View.OnClickListener() {

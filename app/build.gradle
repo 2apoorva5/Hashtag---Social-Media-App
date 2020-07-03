@@ -80,4 +80,5 @@ dependencies {
     implementation 'com.github.dhaval2404:imagepicker:1.7.1'
     implementation 'com.chaos.view:pinview:1.4.3'                            //OTP PinView Library
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.6'
+    implementation 'com.github.armcha:SpaceNavigationView:1.6.0'
 }

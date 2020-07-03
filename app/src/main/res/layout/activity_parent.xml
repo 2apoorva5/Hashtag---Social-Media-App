@@ -7,55 +7,33 @@
     android:background="@color/background"
     tools:context=".ParentActivity">
 
-    <FrameLayout
-        android:id="@+id/parent_frame_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent_fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/background"
-        app:layout_constraintBottom_toTopOf="@+id/parent_tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/parent_tab_layout"
-        android:layout_width="0dp"
+    <com.luseen.spacenavigation.SpaceNavigationView
+        android:id="@+id/space_bottom_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
+        app:space_background_color="@android:color/white"
+        app:active_item_color="@color/colorPrimary"
+        app:inactive_item_color="@android:color/black"
+        app:centre_button_color="@android:color/black"
+        app:centre_button_icon="@drawable/ic_tab_add"
+        app:active_centre_button_background_color="@color/colorPrimary"
+        app:active_centre_button_icon_color="@android:color/white"
+        app:inactive_centre_button_icon_color="@android:color/white"
+        app:space_item_icon_size="24dp"
+        app:space_item_icon_only_size="24dp"
+        app:layout_behavior="com.luseen.spacenavigation.SpaceNavigationViewBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@android:color/white"
-        app:tabIndicatorGravity="top"
-        app:tabPaddingBottom="16dp"
-        app:tabPaddingTop="16dp"
-        app:tabRippleColor="@color/colorPrimary">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_home" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_search" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_add" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_inbox" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_tab_profile" />
-
-    </com.google.android.material.tabs.TabLayout>
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
