@@ -20,7 +20,7 @@
     <color name="textColorPrimaryLight">#FFFFFF</color>
     <color name="textColorSecondaryLight">#EDF7FA</color>
 
-    <color name="spaceInactiveItemColor">#9FA2A5</color>
+    <color name="inactiveBottomNavColor">#9FA2A5</color>
     <color name="fragment_home">#E19E9E</color>
     <color name="fragment_search">#A0E19E</color>
     <color name="fragment_inbox">#9EB4E1</color>

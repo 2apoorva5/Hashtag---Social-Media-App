@@ -17,23 +17,93 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.luseen.spacenavigation.SpaceNavigationView
-        android:id="@+id/space_bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:space_background_color="@android:color/white"
-        app:active_item_color="@color/colorPrimary"
-        app:inactive_item_color="@android:color/black"
-        app:centre_button_color="@android:color/black"
-        app:centre_button_icon="@drawable/ic_tab_add"
-        app:active_centre_button_background_color="@color/colorPrimary"
-        app:active_centre_button_icon_color="@android:color/white"
-        app:inactive_centre_button_icon_color="@android:color/white"
-        app:space_item_icon_size="24dp"
-        app:space_item_icon_only_size="24dp"
-        app:layout_behavior="com.luseen.spacenavigation.SpaceNavigationViewBehavior"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_navigation_container"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bottom_navigation_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/bottom_nav_home"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="24dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_tab_home"
+            android:tint="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/bottom_nav_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_tab_search"
+            android:tint="@color/inactiveBottomNavColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bottom_nav_middle"
+            app:layout_constraintStart_toEndOf="@+id/bottom_nav_home"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/bottom_nav_middle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/bottom_nav_inbox"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="24dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_tab_inbox"
+            android:tint="@color/inactiveBottomNavColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bottom_nav_middle"
+            app:layout_constraintEnd_toStartOf="@+id/bottom_nav_profile"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/bottom_nav_profile"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_tab_profile"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"
+            android:tint="@color/inactiveBottomNavColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_tab_add"
+        app:maxImageSize="32dp"
+        app:tint="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottom_navigation_container"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_container"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

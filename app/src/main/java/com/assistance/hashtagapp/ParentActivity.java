@@ -1,35 +1,30 @@
 package com.assistance.hashtagapp;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.assistance.hashtagapp.Fragments.HomeFragment;
 import com.assistance.hashtagapp.Fragments.InboxFragment;
 import com.assistance.hashtagapp.Fragments.ProfileFragment;
 import com.assistance.hashtagapp.Fragments.SearchFragment;
-import com.assistance.hashtagapp.LoginSignUp.EditProfileActivity;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.luseen.spacenavigation.SpaceItem;
-import com.luseen.spacenavigation.SpaceNavigationView;
-import com.luseen.spacenavigation.SpaceOnClickListener;
 
 public class ParentActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     CollectionReference userRef;
-
-    SpaceNavigationView spaceNavigationView;
+    ImageButton homeBtn, searchBtn, inboxBtn, profileBtn;
+    FloatingActionButton fabAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +36,19 @@ public class ParentActivity extends AppCompatActivity {
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.parent_fragment_container, new HomeFragment()).commit();
-
         initViews();
         initFirebase();
-        setSpaceNavigation(savedInstanceState);
+        setBottomNavigation();
+
+        homeBtn.performClick();
     }
 
     private void initViews() {
-        spaceNavigationView = findViewById(R.id.space_bottom_navigation);
+        homeBtn = findViewById(R.id.bottom_nav_home);
+        searchBtn = findViewById(R.id.bottom_nav_search);
+        inboxBtn = findViewById(R.id.bottom_nav_inbox);
+        profileBtn = findViewById(R.id.bottom_nav_profile);
+        fabAdd = findViewById(R.id.fab_btn_add);
     }
 
     private void initFirebase() {
@@ -57,58 +56,48 @@ public class ParentActivity extends AppCompatActivity {
         userRef = FirebaseFirestore.getInstance().collection("Users");
     }
 
-    private void setSpaceNavigation(Bundle savedInstanceState) {
-        spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
-        spaceNavigationView.addSpaceItem(new SpaceItem(null, R.drawable.ic_tab_home));
-        spaceNavigationView.addSpaceItem(new SpaceItem(null, R.drawable.ic_tab_search));
-        spaceNavigationView.addSpaceItem(new SpaceItem(null, R.drawable.ic_tab_inbox));
-        spaceNavigationView.addSpaceItem(new SpaceItem(null, R.drawable.ic_tab_profile));
-
-        spaceNavigationView.setCentreButtonSelectable(true);
-        spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
+    private void setBottomNavigation() {
+        homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCentreButtonClick() {
-                Toast.makeText(ParentActivity.this,"onCentreButtonClick", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                homeBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.black)));
+                searchBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                profileBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                getSupportFragmentManager().beginTransaction().replace(R.id.parent_fragment_container, new HomeFragment()).commit();
             }
+        });
 
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(int itemIndex, String itemName) {
-                Fragment fragment = null;
-                switch (itemIndex) {
-                    case 0 :
-                        fragment = new HomeFragment();
-                        break;
-                    case 1 :
-                        fragment = new SearchFragment();
-                        break;
-                    case 2 :
-                        fragment = new InboxFragment();
-                        break;
-                    case 3 :
-                        fragment = new ProfileFragment();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.parent_fragment_container, fragment).commit();
+            public void onClick(View v) {
+                searchBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.black)));
+                homeBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                profileBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                getSupportFragmentManager().beginTransaction().replace(R.id.parent_fragment_container, new SearchFragment()).commit();
             }
+        });
 
+        inboxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemReselected(int itemIndex, String itemName) {
-                Fragment fragment = null;
-                switch (itemIndex) {
-                    case 0 :
-                        fragment = new HomeFragment();
-                        break;
-                    case 1 :
-                        fragment = new SearchFragment();
-                        break;
-                    case 2 :
-                        fragment = new InboxFragment();
-                        break;
-                    case 3 :
-                        fragment = new ProfileFragment();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.parent_fragment_container, fragment).commit();
+            public void onClick(View v) {
+                inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.black)));
+                homeBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                searchBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                profileBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                getSupportFragmentManager().beginTransaction().replace(R.id.parent_fragment_container, new InboxFragment()).commit();
+            }
+        });
+
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.black)));
+                homeBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                searchBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                getSupportFragmentManager().beginTransaction().replace(R.id.parent_fragment_container, new ProfileFragment()).commit();
             }
         });
     }
@@ -117,7 +106,7 @@ public class ParentActivity extends AppCompatActivity {
         Window window = parentActivity.getWindow();
         WindowManager.LayoutParams layoutParams = window.getAttributes();
 
-        if(on){
+        if (on) {
             layoutParams.flags |= bits;
         } else {
             layoutParams.flags &= ~bits;
