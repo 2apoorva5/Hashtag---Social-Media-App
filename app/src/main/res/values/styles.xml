@@ -30,21 +30,18 @@
         <item name="android:textColor">@color/textColorPrimaryLight</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="InfoAlert" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorPrimaryLight</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="SuccessAlert" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorPrimaryLight</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
@@ -58,9 +55,8 @@
 
     <style name="ProgressText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/textColorPrimaryDark</item>
-        <item name="android:fontFamily">@font/quicksand_medium</item>
+        <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="SpotsDialog" parent="android:Theme.DeviceDefault.Dialog">
@@ -71,9 +67,8 @@
     </style>
 
     <style name="ChipText" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
