@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@android:color/black"
     tools:context=".LoginSignUp.ToSignUpActivity">
 
     <ImageView
@@ -34,7 +34,7 @@
         android:text="Welcome!"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/textColorPrimaryDark"
+        android:textColor="@color/textColorPrimaryLight"
         android:textSize="40sp"
         android:textStyle="bold"
         android:transitionName="heading1_transition"
@@ -53,7 +53,7 @@
         android:text="Sign up to get started!"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/textColorSecondaryDark"
+        android:textColor="@color/textColorSecondary"
         android:textSize="20sp"
         android:textStyle="normal"
         android:transitionName="heading2_transition"
@@ -119,7 +119,7 @@
         android:text="Already have an account? "
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/textColorPrimaryDark"
+        android:textColor="@color/textColorPrimaryLight"
         android:textSize="14sp"
         android:textStyle="normal"
         android:transitionName="content1_transition"

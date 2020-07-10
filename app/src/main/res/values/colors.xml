@@ -3,24 +3,19 @@
     <color name="colorPrimary">#EE4949</color>
     <color name="colorPrimaryDark">#EE4949</color>
     <color name="colorAccent">#05DFD7</color>
-    <color name="colorAccentLight">#D5FBF9</color>
-    <color name="colorAccentDark">#0DABB3</color>
 
-    <color name="otpView">#B2EBF2</color>
-
-    <color name="background">#E3F6F5</color>
-    <color name="backgroundDark">#3B6978</color>
+    <color name="viewColor">#202020</color>
     <color name="errorColor">#B71C1C</color>
     <color name="infoColor">#0F4C81</color>
-    <color name="successColor">#00BDAA</color>
+    <color name="successColor">#4CAF50</color>
     <color name="inactiveColor">#738598</color>
 
     <color name="textColorPrimaryDark">#000000</color>
-    <color name="textColorSecondaryDark">#738598</color>
     <color name="textColorPrimaryLight">#FFFFFF</color>
-    <color name="textColorSecondaryLight">#EDF7FA</color>
+    <color name="textColorSecondary">#697888</color>
 
-    <color name="inactiveBottomNavColor">#9FA2A5</color>
+    <color name="bottomNavColor">#111111</color>
+    <color name="inactiveBottomNavColor">#616161</color>
     <color name="fragment_home">#E19E9E</color>
     <color name="fragment_search">#A0E19E</color>
     <color name="fragment_inbox">#9EB4E1</color>
