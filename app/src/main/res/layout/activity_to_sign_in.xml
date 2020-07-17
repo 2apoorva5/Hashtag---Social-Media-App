@@ -143,7 +143,7 @@
         android:text="Create one!"
         android:textAlignment="textStart"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold"
         android:transitionName="signin_signup_transition"

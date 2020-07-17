@@ -1,11 +1,5 @@
 package com.assistance.hashtagapp.LoginSignUp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -17,10 +11,15 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.assistance.hashtagapp.BottomSheets.UsernameRequirementsBottomSheet;
 import com.assistance.hashtagapp.ParentActivity;
@@ -55,7 +54,9 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
@@ -246,9 +247,15 @@ public class EditProfileActivity extends AppCompatActivity {
         userName.addTextChangedListener(editProfileTextWatcher);
         userAlias.addTextChangedListener(editProfileTextWatcher);
 
-        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.clear();
+
+        final long today = MaterialDatePicker.todayInUtcMilliseconds();
+
+        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Select your DOB");
-        final MaterialDatePicker materialDatePicker = builder.build();
+        builder.setSelection(today);
+        final MaterialDatePicker<Long> materialDatePicker = builder.build();
 
         userDob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -261,6 +268,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onPositiveButtonClick(Object selection) {
                 userDob.setText(materialDatePicker.getHeaderText());
+                materialDatePicker.dismiss();
             }
         });
     }

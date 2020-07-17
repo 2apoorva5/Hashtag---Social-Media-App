@@ -69,6 +69,10 @@ public class ParentActivity extends AppCompatActivity {
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                homeBtn.setImageResource(R.drawable.ic_bottom_nav_home_fill);
+                searchBtn.setImageResource(R.drawable.ic_bottom_nav_search_line);
+                inboxBtn.setImageResource(R.drawable.ic_bottom_nav_inbox_line);
+                profileBtn.setImageResource(R.drawable.ic_bottom_nav_profile_line);
                 homeBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
                 searchBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
                 inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
@@ -85,8 +89,12 @@ public class ParentActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
+                homeBtn.setImageResource(R.drawable.ic_bottom_nav_home_line);
+                searchBtn.setImageResource(R.drawable.ic_bottom_nav_search_fill);
+                inboxBtn.setImageResource(R.drawable.ic_bottom_nav_inbox_line);
+                profileBtn.setImageResource(R.drawable.ic_bottom_nav_profile_line);
                 homeBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                searchBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
                 inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
                 profileBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
                 searchDot.setVisibility(View.VISIBLE);
@@ -101,9 +109,13 @@ public class ParentActivity extends AppCompatActivity {
         inboxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
+                homeBtn.setImageResource(R.drawable.ic_bottom_nav_home_line);
+                searchBtn.setImageResource(R.drawable.ic_bottom_nav_search_line);
+                inboxBtn.setImageResource(R.drawable.ic_bottom_nav_inbox_fill);
+                profileBtn.setImageResource(R.drawable.ic_bottom_nav_profile_line);
                 homeBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
                 searchBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
                 profileBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
                 inboxDot.setVisibility(View.VISIBLE);
                 inboxDot.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
@@ -117,10 +129,14 @@ public class ParentActivity extends AppCompatActivity {
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                profileBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
+                homeBtn.setImageResource(R.drawable.ic_bottom_nav_home_line);
+                searchBtn.setImageResource(R.drawable.ic_bottom_nav_search_line);
+                inboxBtn.setImageResource(R.drawable.ic_bottom_nav_inbox_line);
+                profileBtn.setImageResource(R.drawable.ic_bottom_nav_profile_fill);
                 homeBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
                 searchBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
                 inboxBtn.setImageTintList(ColorStateList.valueOf(getColor(R.color.inactiveBottomNavColor)));
+                profileBtn.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
                 profileDot.setVisibility(View.VISIBLE);
                 profileDot.setImageTintList(ColorStateList.valueOf(getColor(android.R.color.white)));
                 homeDot.setVisibility(View.GONE);

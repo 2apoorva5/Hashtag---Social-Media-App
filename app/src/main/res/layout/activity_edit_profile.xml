@@ -30,7 +30,7 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_cancel_light"
+        android:src="@drawable/ic_cancel"
         android:tint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -84,11 +84,12 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_camera"
+        android:src="@drawable/ic_camera_lens"
+        android:tint="@android:color/white"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        app:civ_fill_color="@android:color/white"
+        app:civ_fill_color="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/user_profile_pic"
         app:layout_constraintEnd_toEndOf="@+id/user_profile_pic" />
 
