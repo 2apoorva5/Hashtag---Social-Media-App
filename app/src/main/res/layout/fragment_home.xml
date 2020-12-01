@@ -18,7 +18,7 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_camera"
-        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +76,7 @@
         android:focusable="true"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_hashtag_direct"
-        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -139,12 +139,25 @@
                 app:layout_constraintTop_toTopOf="@+id/date"
                 app:layout_constraintBottom_toBottomOf="@+id/greetings" />
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/add_story"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_add_story"
+                android:tint="@android:color/white"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:civ_fill_color="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/user_story"
+                app:layout_constraintStart_toStartOf="@+id/user_story" />
+
             <View
                 android:id="@+id/live_story_indicator"
                 android:layout_width="68dp"
                 android:layout_height="68dp"
                 android:visibility="gone"
-                tools:visibility="visible"
                 android:background="@drawable/border_live_stories"
                 app:layout_constraintStart_toStartOf="@+id/user_story"
                 app:layout_constraintTop_toTopOf="@+id/user_story"
